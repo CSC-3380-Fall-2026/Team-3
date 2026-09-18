@@ -2,7 +2,7 @@
 # Anthony Lee, Dominic Thriffley, DJ Thompson, Lucas Gaudiosi, Michael Vocke
 Project Manager: [Name] ([GitHub Name])\
 Communications Lead: [Name] ([GitHub Name])\
-Git Master: DeJohn THompson ([GitHub Name])\
+Git Master: DeJohn THompson (Git Master)\
 Design Lead: [Name] ([GitHub Name])\
 Quality Assurance Tester: [Name] ([GitHub Name])
 
