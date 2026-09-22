@@ -1,6 +1,6 @@
 # SmartBet: Team 3
 # Anthony Lee, Dominic Thriffley, DJ Thompson, Lucas Gaudiosi, Michael Vocke
-Project Manager: [Name] ([GitHub Name])\
+Project Manager: Dominic Thriffiley (dthriffiley)
 Communications Lead: [Name] ([GitHub Name])\
 Git Master: DeJohn THompson (Git Master)\
 Design Lead: [Name] ([GitHub Name])\
