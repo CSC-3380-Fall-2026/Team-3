@@ -51,7 +51,7 @@ SmartBet will provide statistical analysis for informational purposes. Historica
 	- Windows
   
 # Important Links
-Kanban Board: [link]\
+Kanban Board:([https://github.com/orgs/CSC-3380-Fall-2026/projects/3/views/1](url))
 Designs: [link]\
 Styles Guide(s): [link]
 
