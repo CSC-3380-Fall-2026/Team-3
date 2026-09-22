@@ -1,7 +1,7 @@
 # SmartBet: Team 3
 # Anthony Lee, Dominic Thriffley, DJ Thompson, Lucas Gaudiosi, Michael Vocke
 Project Manager: Dominic Thriffiley (dthriffiley)
-Communications Lead: [Name] ([GitHub Name])\
+Communications Lead: Lucas Gaudiosi (LucasGaudiosi)
 Git Master: DeJohn THompson (Git Master)\
 Design Lead: [Name] ([GitHub Name])\
 Quality Assurance Tester: [Name] ([GitHub Name])
