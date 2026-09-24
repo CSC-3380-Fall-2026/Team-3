@@ -1,10 +1,10 @@
 # SmartBet: Team 3
 # Anthony Lee, Dominic Thriffley, DJ Thompson, Lucas Gaudiosi, Michael Vocke
-Project Manager: Dominic Thriffiley (dthriffiley)
-Communications Lead: Lucas Gaudiosi (LucasGaudiosi)
-Git Master: DeJohn THompson (Git Master)\
-Design Lead: [Name] ([GitHub Name])\
-Quality Assurance Tester: [Name] ([GitHub Name])
+Project Manager: Dominic Thriffiley (dthriffiley)\
+Communications Lead: Lucas Gaudiosi (LucasGaudiosi)\
+Git Master: DeJohn Thompson (Git Master)\
+Design Lead: Michael Vocke ([GitHub Name])\
+Quality Assurance Tester: Anthony Lee ([GitHub Name])
 
 # About Our Software
 SmartBet is a planned sports analytics website for researching live NFL games, comparing sportsbook odds, and making fantasy football lineup decisions. Our goal is to give users access to historical performance data and situational analysis in one place, without a paywall.
