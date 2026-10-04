@@ -25,9 +25,13 @@ return (
     />
 
     <h2>Players</h2>
-      {filteredPlayers.map((player) => (
-        <p key={player}>{player}</p>
-      ))}
+      {search !== "" && filteredPlayers.length === 0 ? (
+  <p>No players found.</p>
+) : (
+  filteredPlayers.map((player) => (
+    <p key={player}>{player}</p>
+  ))
+)}
 
       <h2>Teams</h2>
       {filteredTeams.map((team) => (
