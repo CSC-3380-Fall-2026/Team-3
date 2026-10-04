@@ -1,34 +1,202 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
 }
 
 header {
-    padding: 20px;
-    border-bottom: 1px solid black;
+    background-color: #1f2933;
+    color: white;
+    padding: 20px 40px;
+}
+
+header h1 {
+    margin: 0 0 15px 0;
 }
 
 nav a {
-    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+    margin-right: 25px;
+}
+
+nav a:hover {
+    color: #4caf50;
 }
 
 main {
-    padding: 30px;
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 30px;
+}
+
+main h2 {
+    color: #1f2933;
+}
+
+main p {
+    line-height: 1.5;
 }
 
 .tools {
     display: flex;
     gap: 20px;
+    margin-top: 30px;
 }
 
 .tool {
-    border: 1px solid black;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 25px;
+    flex: 1;
+}
+
+.tool h3 {
+    margin-top: 0;
+}
+
+.tool a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+button {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #256628;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+/* NFL Data page */
+
+.data-options {
+    display: flex;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.data-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 25px;
+    flex: 1;
+    min-height: 220px;
+}
+
+.data-card h3 {
+    margin-top: 0;
+}
+
+.data-results {
+    border-top: 1px solid #ddd;
+    margin-top: 25px;
+    padding-top: 15px;
+    color: #555;
+}
+
+.chat-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     padding: 20px;
-    width: 30%;
+    margin-top: 25px;
+    min-height: 250px;
+}
+
+.message {
+    background-color: #eee;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.user-message {
+    background-color: #e2f0e3;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.chat-input input {
+    flex: 1;
+}
+
+.player-selection {
+    display: flex;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.player-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 25px;
+    flex: 1;
+    min-height: 250px;
+}
+
+.player-card h3 {
+    margin-top: 0;
+}
+
+.player-card input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.player-info {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.compare-button {
+    display: block;
+    margin: 25px auto;
+}
+
+.recommendation {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
 }
 
 footer {
-    margin-top: 40px;
+    background-color: #1f2933;
+    color: #ddd;
+    text-align: center;
     padding: 20px;
-    border-top: 1px solid black;
+    margin-top: 40px;
+}
+
+/* Smaller screens */
+
+@media (max-width: 700px) {
+    .tools,
+    .data-options,
+    .player-selection {
+        flex-direction: column;
+    }
 }
