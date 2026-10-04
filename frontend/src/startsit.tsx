@@ -50,28 +50,37 @@ function StartSit() {
             />
 
             {/*search boundaries*/}
-            {search.trim() !== '' && (
-                <div>
-                    {players.filter((name) =>
-                        name.toLowerCase().includes(search.toLowerCase())
-                    )
-                        .map((name) => (
-                                <p key={name}>
-                                    <button
-                                        type="button"
-                                        disabled={selectedPlayers.includes(name) || selectedPlayers.length >= 5}
-                                        onClick={() => {
-                                            setSelecetedPlayers([...selectedPlayers, name]);
-                                            setSearch('');
-                                        }}>{name}
-                                    </button>
-                                </p>
-                            )
-                        )
-                    }
-                </div>
-            )
-            }
+{search.trim() !== '' && (
+    <div>
+        {players.filter((name) =>
+            name.toLowerCase().includes(search.toLowerCase())
+        ).length === 0 ? (
+            <p>No players found.</p>
+        ) : (
+            players
+                .filter((name) =>
+                    name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((name) => (
+                    <p key={name}>
+                        <button
+                            type="button"
+                            disabled={
+                                selectedPlayers.includes(name) ||
+                                selectedPlayers.length >= 5
+                            }
+                            onClick={() => {
+                                setSelecetedPlayers([...selectedPlayers, name]);
+                                setSearch('');
+                            }}
+                        >
+                            {name}
+                        </button>
+                    </p>
+                ))
+        )}
+    </div>
+)}
 
             {/*makes list of players clicked*/}
             <div>
