@@ -1,6 +1,4 @@
 import { mockPlayer } from "../data/profilemockdata";
-import "./profilepages.css";
-
 function PlayerPage() {
   const player = mockPlayer;
 
