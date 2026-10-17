@@ -1,4 +1,5 @@
-export const mockPrediction = {
+export const mockPredictions = [
+  {
   player: "Tyler Shough",
   team: "New Orleans Saints",
   opponent: "Atlanta Falcons",
