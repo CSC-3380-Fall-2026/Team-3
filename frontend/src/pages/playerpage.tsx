@@ -1,6 +1,14 @@
 import { mockPlayer } from "../data/profilemockdata";
-function PlayerPage() {
-  const player = mockPlayer;
+
+type PlayerPageProps = {
+  playerName: string;
+};
+
+function PlayerPage({ playerName }: PlayerPageProps) {
+  const player = {
+    ...mockPlayer,
+    name: playerName,
+  };
 
   return (
     <main className="profile-page">
@@ -9,6 +17,10 @@ function PlayerPage() {
         <div>
           <p className="profile-label">PLAYER PROFILE</p>
           <h1>{player.name}</h1>
+          <p>
+            Demo profile — statistics and team information are placeholder
+            data and do not represent the selected player.
+          </p>
           <p>
             {player.team} · {player.position}
           </p>

@@ -8,7 +8,7 @@ export const mockPlayer= {
   stats: {
     passingYards: 1,
     touchdowns: 0,
-    interceptions: 300
+    interceptions: 300,
     completionPercentage: 0.1,
   },
   recentGames: [
