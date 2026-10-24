@@ -5,7 +5,7 @@
     "dev": "ts-node src/server.ts"
   },
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
+    "better-sqlite3": "12.11.1",
     "express": "^5.1.0"
   },
   "devDependencies": {
