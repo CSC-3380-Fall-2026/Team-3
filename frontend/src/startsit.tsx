@@ -14,6 +14,7 @@ function StartSit() {
     const [scoring, setScoring] = useState('PPR');
     const [selectedPlayers, setSelecetedPlayers] = useState<string[]>([]);
     const [results, setResults] = useState(false);
+    const [activePlayer, setActivePlayer] = useState('');
 
 const [players, setPlayers] = useState<Player[]>([]);
 const [loading, setLoading] = useState(false);
@@ -167,9 +168,24 @@ useEffect(() => {
                     })
                         .sort((a,b) => b.projection - a.projection)
                         .map((player) =>(
-                            <p key={player.name}>
-                                {player.name}: {player.projection.toFixed(1)} points
-                            </p>
+                            <div key={player.name}>
+                            <button
+                                type="button"
+                                onClick={() => setActivePlayer(player.name)}
+                                aria-expanded={activePlayer === player.name}
+                            >
+                                {player.name}
+                            </button>
+                            : {player.projection.toFixed(1)} points
+
+                            {activePlayer === player.name && (
+                                <div>
+                                    <p>Projected yards: {fakeProjection[player.name].yards}</p>
+                                    <p>Projected receptions: {fakeProjection[player.name].receptions}</p>
+                                    <p>Projected fantasy points ({scoring}): {player.projection.toFixed(1)}</p>
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
             )
