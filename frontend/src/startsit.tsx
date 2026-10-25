@@ -1,4 +1,12 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {getData} from './api';
+
+type Player = {
+    player_id: string;
+    player_name: string;
+    position: string;
+    team_abbr: string;
+};
 
 function StartSit() {
     {/*Constants*/}
@@ -7,13 +15,48 @@ function StartSit() {
     const [selectedPlayers, setSelecetedPlayers] = useState<string[]>([]);
     const [results, setResults] = useState(false);
 
-    const players = [
-        'Dominic Thriffiley',
-        'Lucas Gaudiosi',
-        'De John Thompson',
-        'Michael Vocke',
-        'Anthony Lee',
-    ];
+const [players, setPlayers] = useState<Player[]>([]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState('');
+
+useEffect(() => {
+    if (search.trim() === '') {
+        setPlayers([]);
+        setError('');
+        return;
+    }
+
+    let cancelled = false;
+
+    const timer = setTimeout(async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+            const data = await getData<Player[]>(
+                `/players/search?name=${encodeURIComponent(search.trim())}`
+            );
+
+            if (!cancelled) {
+                setPlayers(data);
+            }
+        } catch {
+            if (!cancelled) {
+                setError('Unable to search players.');
+                setPlayers([]);
+            }
+        } finally {
+            if (!cancelled) {
+                setLoading(false);
+            }
+        }
+    }, 300);
+
+    return () => {
+        cancelled = true;
+        clearTimeout(timer);
+    };
+}, [search]);
 
     const fakeProjection: Record<string, {yards: number; receptions: number}> = {
         'Dominic Thriffiley': {yards: 10.2, receptions: 2.1},
@@ -50,37 +93,37 @@ function StartSit() {
             />
 
             {/*search boundaries*/}
-{search.trim() !== '' && (
-    <div>
-        {players.filter((name) =>
-            name.toLowerCase().includes(search.toLowerCase())
-        ).length === 0 ? (
-            <p>No players found.</p>
-        ) : (
-            players
-                .filter((name) =>
-                    name.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((name) => (
-                    <p key={name}>
-                        <button
-                            type="button"
-                            disabled={
-                                selectedPlayers.includes(name) ||
-                                selectedPlayers.length >= 5
-                            }
-                            onClick={() => {
-                                setSelecetedPlayers([...selectedPlayers, name]);
-                                setSearch('');
-                            }}
-                        >
-                            {name}
-                        </button>
-                    </p>
-                ))
-        )}
-    </div>
-)}
+            {search.trim() !== '' && (
+                <div>
+                    {loading && <p>Searching...</p>}
+                    {error && <p>{error}</p>}
+
+                    {!loading && !error && players.length === 0 && (
+                        <p>No players found.</p>
+                    )}
+
+                    {!loading && !error && players.map((player) => (
+                        <p key={player.player_id}>
+                            <button
+                                type="button"
+                                disabled={
+                                    selectedPlayers.includes(player.player_name) ||
+                                    selectedPlayers.length >= 5
+                                }
+                                onClick={() => {
+                                    setSelecetedPlayers([
+                                        ...selectedPlayers,
+                                        player.player_name
+                                    ]);
+                                    setSearch('');
+                                }}
+                            >
+                                {player.player_name} ({player.position} - {player.team_abbr})
+                            </button>
+                        </p>
+                    ))}
+                </div>
+            )}
 
             {/*makes list of players clicked*/}
             <div>
@@ -107,7 +150,7 @@ function StartSit() {
 
                     {/*PPR Calc and Sorting*/}
                     {selectedPlayers.map((name) => {
-                        const player = fakeProjection[name];
+                        const player = fakeProjection[name] ?? {yards: 0, receptions: 0};
                         let pprCalc;
 
                         if (scoring === 'PPR'){
