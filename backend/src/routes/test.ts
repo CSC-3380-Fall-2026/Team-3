@@ -37,4 +37,37 @@ router.get("/players/search", (req, res) => {
     res.json(players);
 });
 
+router.get("/players/:playerId/stats", (req, res) => {
+    const { playerId } = req.params;
+
+    const player = db.prepare(`
+        SELECT player_id, player_name, position, team_abbr
+        FROM players
+        WHERE player_id = ?
+    `).get(playerId);
+
+    if (!player) {
+        return res.status(404).json({
+            error: "Player not found"
+        });
+    }
+
+    const stats = db.prepare(`
+        SELECT
+            ps.*,
+            g.season,
+            g.week,
+            g.game_date
+        FROM player_stats ps
+        JOIN games g ON ps.game_id = g.game_id
+        WHERE ps.player_id = ?
+        ORDER BY g.season DESC, g.week DESC
+    `).all(playerId);
+
+    res.json({
+        player,
+        stats
+    });
+});
+
 export default router;
