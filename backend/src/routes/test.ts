@@ -16,6 +16,28 @@ router.get("/teams", (req, res) => {
     res.json(teams);
 });
 
+router.get("/teams/search", (req, res) => {
+    const name = String(req.query.name || "").trim();
+
+    if (!name) {
+        return res.status(400).json({
+            error: "Team name is required",
+        });
+    }
+
+    const teams = db
+        .prepare(`
+            SELECT *
+            FROM teams
+            WHERE LOWER(team_name) LIKE LOWER(?)
+               OR LOWER(team_abbr) LIKE LOWER(?)
+            ORDER BY team_name
+        `)
+        .all(`%${name}%`, `%${name}%`);
+
+    res.json(teams);
+});
+
 router.get("/players/search", (req, res) => {
     const name = String(req.query.name || "").trim();
 
