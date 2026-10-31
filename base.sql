@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS games
     home_score  INTEGER,
     away_score  INTEGER,
     game_status TEXT,
+    sofascore_event_id TEXT,
     FOREIGN KEY (home_team) REFERENCES teams (team_abbr),
     FOREIGN KEY (away_team) REFERENCES teams (team_abbr)
 );
