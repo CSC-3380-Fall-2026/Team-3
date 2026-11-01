@@ -1,119 +1,114 @@
-import { mockTeam } from "../data/profilemockdata";
-import "./profilepages.css";
+import { useEffect, useState } from "react";
+import { getData } from "../api";
+// import "./profilepages.css";
 
-function TeamPage() {
-  const team = mockTeam;
-  const player = team.featuredPlayer;
-  return (
+type Team = {
+  team_abbr: string;
+  team_name: string;
+  team_conf: string | null;
+  team_division: string | null;
+};
+
+type TeamPageProps = {
+  teamAbbr?: string;
+};
+
+function TeamPage({ teamAbbr }: TeamPageProps) {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    getData<Team[]>("/teams")
+      .then((data) => {
+        setTeams(data);
+      })
+      .catch(() => {
+        setError("Unable to load team information.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>Loading teams...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (teams.length === 0) {
+    return <p>No teams found.</p>;
+  }
+
+const team = teamAbbr
+  ? teams.find((team) => team.team_abbr === teamAbbr)
+  : teams.find((team) => team.team_abbr !== "TEST");
+
+if (!team) {
+  return <p>Team not found.</p>;
+}
+    return (
     <main className="profile-page">
       <header className="profile-header">
         <div className="profile-avatar team-avatar">
-          {team.abbreviation}
+          {team.team_abbr}
         </div>
         <div>
           <p className="profile-label">TEAM PROFILE</p>
-          <h1>{team.name}</h1>
+          <h1>{team.team_name}</h1>
           <p>
-            {team.conference} · {team.division}
+            {team.team_conf || "Conference unavailable"} ·{" "}
+            {team.team_division || "Division unavailable"}
           </p>
-          <p className="stadium-name">{team.stadium}</p>
         </div>
       </header>
+
       <section className="profile-section">
         <h2>Team Overview</h2>
         <div className="stats-grid">
           <div className="stat-card">
-            <p>Wins</p>
-            <h3>{team.record.wins}</h3>
+            <p>Team</p>
+            <h3>{team.team_name}</h3>
           </div>
           <div className="stat-card">
-            <p>Losses</p>
-            <h3>{team.record.losses}</h3>
+            <p>Abbreviation</p>
+            <h3>{team.team_abbr}</h3>
           </div>
           <div className="stat-card">
-            <p>Games Played</p>
-            <h3>{team.record.wins + team.record.losses}</h3>
+            <p>Conference</p>
+            <h3>{team.team_conf || "N/A"}</h3>
           </div>
           <div className="stat-card">
-            <p>Win Percentage</p>
-            <h3>
-              {(
-                (team.record.wins /
-                  (team.record.wins + team.record.losses)) *
-                100
-              ).toFixed(1)}
-              %
-            </h3>
+            <p>Division</p>
+            <h3>{team.team_division || "N/A"}</h3>
           </div>
         </div>
       </section>
+
       <section className="profile-section">
-        <h2>Featured Player</h2>
-        <div className="profile-header">
-          <div className="profile-avatar">{player.number}</div>
-          <div>
-            <p className="profile-label">{player.position}</p>
-            <h2>{player.name}</h2>
-            <p>{team.name}</p>
-          </div>
-        </div>
-        <div className="stats-grid player-stats">
-          <div className="stat-card">
-            <p>Rushing Yards</p>
-            <h3>{player.stats.rushingYards.toLocaleString()}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Rushing TDs</p>
-            <h3>{player.stats.rushingTouchdowns}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Receptions</p>
-            <h3>{player.stats.receptions}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Receiving Yards</p>
-            <h3>{player.stats.receivingYards}</h3>
-          </div>
-        </div>
-      </section>
-      <section className="profile-section">
-        <h2>Recent Games</h2>
-        <div className="profile-table-wrapper">
-          <table className="profile-table">
-            <thead>
-              <tr>
-                <th>Opponent</th>
-                <th>Result</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {team.recentGames.map((game) => (
-                <tr key={game.opponent}>
-                  <td>{game.opponent}</td>
-                  <td>
-                    <span
-                      className={
-                        game.result === "W" ? "win-result" : "loss-result"
-                      }
-                    >
-                      {game.result === "W" ? "Win" : "Loss"}
-                    </span>
-                  </td>
-                  <td>{game.score}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <section className="profile-section">
-        <h2>Team Analytics</h2>
-        <p className="placeholder-text">
-          Future feature: display team statistics, upcoming matchups,
-          sportsbook odds, and historical betting trends.
-        </p>
-      </section>
+  <h2>Featured Player</h2>
+  <p className="placeholder-text">
+    Featured player information is not available yet.
+  </p>
+</section>
+
+<section className="profile-section">
+  <h2>Recent Games</h2>
+  <p className="placeholder-text">
+    Recent game results are not available yet.
+  </p>
+</section>
+
+<section className="profile-section">
+  <h2>Team Analytics</h2>
+  <p className="placeholder-text">
+    Future feature: display team statistics, upcoming matchups,
+    sportsbook odds, and historical betting trends.
+  </p>
+</section>
     </main>
   );
 }
