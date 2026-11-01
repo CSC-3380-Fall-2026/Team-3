@@ -70,6 +70,20 @@ useEffect(() => {
     return (
         <div>
             <h1>Start/Sit</h1>
+            {/*reset button*/}
+              <button
+                  type="button"
+                  onClick={() => {
+                      setSearch('');
+                      setScoring('PPR');
+                      setSelecetedPlayers([]);
+                      setResults(false);
+                      setActivePlayer('');
+                  }}
+              >
+                  Reset
+              </button>
+
             <label htmlFor="scoring"> Scoring:
             </label>
 
@@ -129,7 +143,21 @@ useEffect(() => {
             {/*makes list of players clicked*/}
             <div>
                 {selectedPlayers.map((name) => (
-                    <p key={name}>{name}</p>
+                    <p key={name}>
+                    {name}
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setSelecetedPlayers(
+                                selectedPlayers.filter((player) => player
+!== name),
+                            );
+                        }}
+                    >
+                        Remove
+                    </button>                                        
+                </p>
+
                 ))
                 }
             </div>
