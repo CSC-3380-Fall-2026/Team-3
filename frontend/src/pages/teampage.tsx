@@ -9,6 +9,15 @@ type Team = {
   team_division: string | null;
 };
 
+type Game = {
+  game_id: string;
+  game_date: string;
+  home_team: string;
+  away_team: string;
+  home_score: number;
+  away_score: number;
+};
+
 type TeamPageProps = {
   teamAbbr?: string;
 };
@@ -17,6 +26,9 @@ function TeamPage({ teamAbbr }: TeamPageProps) {
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [games, setGames] = useState<Game[]>([]);
+  const [gamesLoading, setGamesLoading] = useState(true);
+  const [gamesError, setGamesError] = useState("");
 
   useEffect(() => {
     getData<Team[]>("/teams")
@@ -30,6 +42,31 @@ function TeamPage({ teamAbbr }: TeamPageProps) {
         setLoading(false);
       });
   }, []);
+
+useEffect(() => {
+  const selectedTeam = teamAbbr || teams.find(
+    (team) => team.team_abbr !== "TEST"
+  )?.team_abbr;
+
+  if (!selectedTeam) {
+    return;
+  }
+
+  setGamesLoading(true);
+  setGamesError("");
+
+  getData<Game[]>(`/teams/${selectedTeam}/games`)
+    .then((data) => {
+      setGames(data);
+    })
+    .catch(() => {
+      setGamesError("Unable to load recent games.");
+    })
+    .finally(() => {
+      setGamesLoading(false);
+    });
+}, [teamAbbr, teams]);
+
 
   if (loading) {
     return <p>Loading teams...</p>;
@@ -95,12 +132,44 @@ if (!team) {
   </p>
 </section>
 
+
 <section className="profile-section">
   <h2>Recent Games</h2>
-  <p className="placeholder-text">
-    Recent game results are not available yet.
-  </p>
+
+  {gamesLoading ? (
+    <p>Loading recent games...</p>
+  ) : gamesError ? (
+    <p>{gamesError}</p>
+  ) : games.length === 0 ? (
+    <p className="placeholder-text">No recent games available.</p>
+  ) : (
+    <div className="stats-grid">
+      {games.map((game) => {
+        const isHome = game.home_team === team.team_abbr;
+        const opponent = isHome ? game.away_team : game.home_team;
+        const teamScore = isHome ? game.home_score : game.away_score;
+        const opponentScore = isHome ? game.away_score : game.home_score;
+
+        const result =
+          teamScore > opponentScore
+            ? "Win"
+            : teamScore < opponentScore
+              ? "Loss"
+              : "Tie";
+
+        return (
+          <div className="stat-card" key={game.game_id}>
+            <p>vs. {opponent}</p>
+            <h3>{result}</h3>
+            <p>{teamScore} - {opponentScore}</p>
+            <p>{game.game_date.slice(0, 10)}</p>
+          </div>
+        );
+      })}
+    </div>
+  )}
 </section>
+
 
 <section className="profile-section">
   <h2>Team Analytics</h2>
