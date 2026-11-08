@@ -44,75 +44,92 @@ function PredictionResultsPage() {
   const [gameError, setGameError] = useState("");
   const [playerError, setPlayerError] = useState("");
 
-  useEffect(() => {
-    getData<ESPNGame[]>("/games/live")
-      .then((data) => {
-        setGames(data);
+useEffect(() => {
+  let cancelled = false;
+  const loadGames = async () => {
+    try {
+      const data = await getData<ESPNGame[]>("/games/live");
+      if (cancelled) return;
 
-        if (data.length > 0) {
-          setSelectedGameId(data[0].eventId);
-        }
-      })
-      .catch(() => {
+      setGames(data);
+
+      setSelectedGameId((current) =>
+        data.some((game) => game.eventId === current)
+          ? current
+          : data[0]?.eventId ?? ""
+      );
+
+      setGameError("");
+    } catch {
+      if (!cancelled) {
         setGameError("Unable to retrieve NFL games from ESPN.");
-      })
-      .finally(() => {
+      }
+    } finally {
+      if (!cancelled) {
         setLoadingGames(false);
-      });
-  }, []);
+      }
+    }
+  };
 
-  useEffect(() => {
-    if (!selectedGameId) return;
+  loadGames();
 
-    setPlayers([]);
-    setSelectedPlayerId("");
-    setPlayerError("");
-    setLoadingPlayers(true);
+  const interval = setInterval(loadGames, 30000);
 
-    getData<{ eventId: string; players: ESPNPlayer[] }>(
-      `/games/${selectedGameId}/players`
-    )
-      .then((data) => {
-        setPlayers(data.players);
-      })
-      .catch((error: Error) => {
-        if (error.message.includes("404")) {
-          setPlayerError(
-            "Player statistics are not available for this game yet."
-          );
-        } else {
-          setPlayerError(
-            "Unable to retrieve player statistics from ESPN."
-          );
-        }
-      })
-      .finally(() => {
+  return () => {
+    cancelled = true;
+    clearInterval(interval);
+  };
+}, []);
+  
+ useEffect(() => {
+  if (!selectedGameId) return;
+
+  let cancelled = false;
+
+  setPlayers([]);
+  setSelectedPlayerId("");
+  setPlayerError("");
+  setLoadingPlayers(true);
+
+  const loadPlayers = async () => {
+    try {
+      const data = await getData<{
+        eventId: string;
+        players: ESPNPlayer[];
+      }>(`/games/${selectedGameId}/players`);
+
+      if (cancelled) return;
+
+      setPlayers(data.players);
+      setPlayerError("");
+    } catch (error) {
+      if (cancelled) return;
+
+      if (error instanceof Error && error.message.includes("404")) {
+        setPlayerError(
+          "Player statistics are not available for this game yet."
+        );
+      } else {
+        setPlayerError(
+          "Unable to retrieve player statistics from ESPN."
+        );
+      }
+    } finally {
+      if (!cancelled) {
         setLoadingPlayers(false);
-      });
-  }, [selectedGameId]);
-
-  const groupedPlayers = Object.values(
-    players.reduce<Record<string, PlayerData>>((groups, player) => {
-      if (!player.playerId || !player.playerName) {
-        return groups;
       }
+    }
+  };
 
-      if (!groups[player.playerId]) {
-        groups[player.playerId] = {
-          playerId: player.playerId,
-          playerName: player.playerName,
-          team: player.team ?? "Unknown",
-          statCategories: {},
-        };
-      }
+  loadPlayers();
 
-      groups[player.playerId].statCategories[player.statType] =
-        player.stats;
+  const interval = setInterval(loadPlayers, 30000);
 
-      return groups;
-    }, {})
-  );
-
+  return () => {
+    cancelled = true;
+    clearInterval(interval);
+  };
+}, [selectedGameId]);
   const selectedGame = games.find(
     (game) => game.eventId === selectedGameId
   );
