@@ -5,6 +5,7 @@ import TeamPage from "./pages/teampage";
 import GamePage from "./pages/gamepage";
 import PredictionPageTest from "./pages/predictionpagetest";
 import StartSit from "./startsit";
+import DemoReplayPage from "./pages/demoreplaypage";
 
 function App() {
     const [currentPage, setCurrentPage] = useState("search"); //current page
@@ -18,6 +19,7 @@ function App() {
                 <a href="#" onClick={() => setCurrentPage("predictions")}>Predictions</a>
                 <a href="#" onClick={() => setCurrentPage("team")}>Team Page</a>
                 <a href="#" onClick={() => setCurrentPage("game")}>Game Page</a>
+                <a href="#" onClick={() => setCurrentPage("demo")}>ESPN Replay Demo</a>
             </nav>
             {selectedPlayer === null ? (
                 <>
@@ -28,6 +30,7 @@ function App() {
                     {currentPage === "predictions" && <PredictionPageTest/>}
                     {currentPage === "team" && <TeamPage/>}
                     {currentPage === "game" && <GamePage/>}
+                    {currentPage === "demo" && <DemoReplayPage/>}
                 </>
             ) : (
                 <div>
