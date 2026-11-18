@@ -1,7 +1,11 @@
 import {useState} from "react";
 import {teams, players, games} from "../data/mockdata";
 
-function SearchPage() {
+type SearchPageProps = {
+  onSelectPlayer: (playerName: string) => void;
+};
+
+function SearchPage({ onSelectPlayer }: SearchPageProps) {
   const [search, setSearch] = useState("");
   const searchTerm = search.toLowerCase();
   const filteredPlayers = players.filter((player)=>
@@ -29,8 +33,14 @@ return (
   <p>No players found.</p>
 ) : (
   filteredPlayers.map((player) => (
-    <p key={player}>{player}</p>
-  ))
+  <button
+    key={player}
+    type="button"
+    onClick={() => onSelectPlayer(player)}
+  >
+    {player}
+  </button>
+))
 )}
 
       <h2>Teams</h2>
