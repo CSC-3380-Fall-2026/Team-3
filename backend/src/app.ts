@@ -22,7 +22,6 @@ app.use("/api", playerPropsRoutes);
 
 app.use("/api", healthRoutes);
 
-export default app;
 app.use("/api", demoReplayRoutes);
 
 export default app;
