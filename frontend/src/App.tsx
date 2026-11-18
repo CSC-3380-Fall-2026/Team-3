@@ -18,6 +18,8 @@ import TeamPage from "./pages/teampage";
 import GamePage from "./pages/gamepage";
 import PredictionPageTest from "./pages/predictionpagetest";
 import StartSit from "./startsit";
+import DemoReplayPage from "./pages/demoreplaypage";
+
 function App() {
     const [currentPage, setCurrentPage] = useState("search"); //current page
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
@@ -58,6 +60,7 @@ function App() {
                 <a href="#" onClick={() => setCurrentPage("status")}>
     System Status
 </a>
+                <a href="#" onClick={() => setCurrentPage("demo")}>ESPN Replay Demo</a>
             </nav>
             {selectedPlayer === null ? (
                 <>
@@ -70,6 +73,7 @@ function App() {
                     {currentPage === "game" && selectedGame !== null && <GamePage game={selectedGame} />}
                     {currentPage === "game" && <GamePage/>}
                     {currentPage === "status" && <StatusPanel />}
+                    {currentPage === "demo" && <DemoReplayPage/>}
                 </>
             ) : (
                 <div>
