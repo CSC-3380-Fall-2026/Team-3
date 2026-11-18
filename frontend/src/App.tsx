@@ -1,14 +1,4 @@
-import {useState} from "react";
-import SearchPage from "./components/SearchPage" ;
-import type { Game } from "./components/SearchPage";
 
-import NFLDataPage from "./pages/nfldatapage";
-
-function App() {
-  return (
-    <div>
-      <h1>SmartBet</h1>
-      <NFLDataPage />
 import { useState } from "react";
 import "./App.css";
 
@@ -16,14 +6,9 @@ import SearchPage from "./components/SearchPage";
 import PlayerPage from "./pages/playerpage";
 import TeamPage from "./pages/teampage";
 import GamePage from "./pages/gamepage";
+import type { Game } from "./components/SearchPage";
 import PredictionPageTest from "./pages/predictionpagetest";
 import StartSit from "./startsit";
-function App() {
-    const [currentPage, setCurrentPage] = useState("search"); //current page
-    const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-    const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-    return (
-import StatusPanel from "./components/StatusPanel";
 
 type Page = "search" | "startsit" | "predictions" | "team" | "game";
 
@@ -38,66 +23,13 @@ const navigation: { id: Page; label: string }[] = [
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("search");
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-  const [showTeams, setShowTeams] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   const navigate = (page: Page) => {
     setCurrentPage(page);
     setSelectedPlayer(null);
   };
 
-      {showTeams ? (
-        <div>
-            <h1>SmartBet</h1>
-            <nav> {/*page selection*/}
-                <a href="#" onClick={() => setCurrentPage("search")}>NFL Data</a>
-                <a href="#" onClick={() => setCurrentPage("startsit")}>Start-Sit</a>
-                <a href="#" onClick={() => setCurrentPage("predictions")}>Predictions</a>
-                <a href="#" onClick={() => setCurrentPage("team")}>Team Page</a>
-                <a href="#" onClick={() => {setCurrentPage("game")}}>Game Page</a>
-                <a href="#" onClick={() => setCurrentPage("game")}>Game Page</a>
-                <a href="#" onClick={() => setCurrentPage("status")}>
-    System Status
-</a>
-            </nav>
-            {selectedPlayer === null ? (
-                <>
-                    {currentPage === "search" && (
-                        <SearchPage onSelectPlayer={setSelectedPlayer} onSelectGame={ (game) => {setSelectedGame(game); setCurrentPage("game");}}  />
-                    )}
-                    {currentPage === "startsit" && <StartSit/>}
-                    {currentPage === "predictions" && <PredictionPageTest/>}
-                    {currentPage === "team" && <TeamPage/>}
-                    {currentPage === "game" && selectedGame !== null && <GamePage game={selectedGame} />}
-                    {currentPage === "game" && <GamePage/>}
-                    {currentPage === "status" && <StatusPanel />}
-                </>
-            ) : (
-                <div>
-                    <button onClick={() => setSelectedPlayer(null)}>
-                        Back to Search
-                    </button>
-                    <PlayerPage playerName={selectedPlayer}/>
-                </div>
-            )}
-          <button onClick={() => setShowTeams(false)}>
-            Back to Search
-          </button>
-
-          <TeamPage />
-        </div>
-      ) : selectedPlayer === null ? (
-        <div>
-          <button onClick={() => setShowTeams(true)}>
-            Teams
-          </button>
-
-          <SearchPage onSelectPlayer={setSelectedPlayer} />
-        </div>
-      ) : (
-        <div>
-          <button onClick={() => setSelectedPlayer(null)}>
-            Back to Search
-          </button>
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -153,7 +85,7 @@ function App() {
         ) : (
           <>
             {currentPage === "search" && (
-              <SearchPage onSelectPlayer={setSelectedPlayer} />
+              <SearchPage onSelectPlayer={setSelectedPlayer} onSelectGame={ (game) => {setSelectedGame(game); setCurrentPage("game");}}  />
             )}
 
             {currentPage === "startsit" && <StartSit />}
@@ -162,11 +94,9 @@ function App() {
 
             {currentPage === "team" && <TeamPage />}
 
-            {currentPage === "game" && (
+            {currentPage === "game" &&  selectedGame !== null && (
               <GamePage
-                sofascoreGameID=""
-                homeTeam="Home"
-                awayTeam="Away"
+                game={selectedGame}
               />
             )}
           </>
@@ -177,5 +107,3 @@ function App() {
 }
 
 export default App;
-export default App;
-
