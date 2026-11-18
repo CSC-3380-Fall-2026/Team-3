@@ -6,6 +6,7 @@ import livePlayerStatsRoutes from "./routes/livePlayerStats";
 import healthRoutes from "./routes/health";
 import historicalSituationsRoutes from "./routes/historicalSituations";
 import playerPropsRoutes from "./routes/playerProps";
+import demoReplayRoutes from "./routes/demoReplay";
 
 const app = express();
 
@@ -20,5 +21,7 @@ app.use("/api", historicalSituationsRoutes);
 app.use("/api", playerPropsRoutes);
 
 app.use("/api", healthRoutes);
+
+app.use("/api", demoReplayRoutes);
 
 export default app;

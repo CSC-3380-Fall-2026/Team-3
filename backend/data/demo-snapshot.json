@@ -1,0 +1,1270 @@
+{
+  "source": "ESPN",
+  "mode": "REPLAY_DEMO",
+  "capturedAt": "2026-11-13T06:11:33.526Z",
+  "game": {
+    "eventId": "401873052",
+    "homeTeam": "New York Giants",
+    "awayTeam": "Washington Commanders",
+    "homeScore": "21",
+    "awayScore": "24",
+    "status": "Final",
+    "gameState": "post",
+    "date": "2026-11-13T01:15Z"
+  },
+  "players": [
+    {
+      "playerId": "4426348",
+      "playerName": "Jayden Daniels",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "passing",
+      "stats": {
+        "C/ATT": "23/33",
+        "YDS": "249",
+        "AVG": "7.5",
+        "TD": "3",
+        "INT": "2",
+        "SACKS": "1-14",
+        "QBR": "52.3",
+        "RTG": "96.7"
+      }
+    },
+    {
+      "playerId": "4697815",
+      "playerName": "Rachaad White",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "11",
+        "YDS": "47",
+        "AVG": "4.3",
+        "TD": "0",
+        "LONG": "18"
+      }
+    },
+    {
+      "playerId": "4426348",
+      "playerName": "Jayden Daniels",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "11",
+        "YDS": "28",
+        "AVG": "2.5",
+        "TD": "0",
+        "LONG": "8"
+      }
+    },
+    {
+      "playerId": "3068267",
+      "playerName": "Austin Ekeler",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "9",
+        "YDS": "26",
+        "AVG": "2.9",
+        "TD": "0",
+        "LONG": "7"
+      }
+    },
+    {
+      "playerId": "5151317",
+      "playerName": "Robert Henry Jr.",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "2",
+        "YDS": "4",
+        "AVG": "2.0",
+        "TD": "0",
+        "LONG": "4"
+      }
+    },
+    {
+      "playerId": "2976212",
+      "playerName": "Stefon Diggs",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "6",
+        "YDS": "83",
+        "AVG": "13.8",
+        "TD": "1",
+        "LONG": "32",
+        "TGTS": "10"
+      }
+    },
+    {
+      "playerId": "5081432",
+      "playerName": "Antonio Williams",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "2",
+        "YDS": "42",
+        "AVG": "21.0",
+        "TD": "1",
+        "LONG": "31",
+        "TGTS": "2"
+      }
+    },
+    {
+      "playerId": "4690923",
+      "playerName": "Ben Sinnott",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "4",
+        "YDS": "42",
+        "AVG": "10.5",
+        "TD": "1",
+        "LONG": "24",
+        "TGTS": "4"
+      }
+    },
+    {
+      "playerId": "4567156",
+      "playerName": "Treylon Burks",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "2",
+        "YDS": "27",
+        "AVG": "13.5",
+        "TD": "0",
+        "LONG": "20",
+        "TGTS": "3"
+      }
+    },
+    {
+      "playerId": "3068267",
+      "playerName": "Austin Ekeler",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "4",
+        "YDS": "26",
+        "AVG": "6.5",
+        "TD": "0",
+        "LONG": "8",
+        "TGTS": "4"
+      }
+    },
+    {
+      "playerId": "4360635",
+      "playerName": "Chig Okonkwo",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "4",
+        "YDS": "24",
+        "AVG": "6.0",
+        "TD": "0",
+        "LONG": "11",
+        "TGTS": "8"
+      }
+    },
+    {
+      "playerId": "4697815",
+      "playerName": "Rachaad White",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "receiving",
+      "stats": {
+        "REC": "1",
+        "YDS": "5",
+        "AVG": "5.0",
+        "TD": "0",
+        "LONG": "5",
+        "TGTS": "2"
+      }
+    },
+    {
+      "playerId": "3125248",
+      "playerName": "Jeremy Reaves",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "fumbles",
+      "stats": {
+        "FUM": "0",
+        "LOST": "0",
+        "REC": "1"
+      }
+    },
+    {
+      "playerId": "5081807",
+      "playerName": "Sonny Styles",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "13",
+        "SOLO": "5",
+        "SACKS": "0",
+        "TFL": "1",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3125248",
+      "playerName": "Jeremy Reaves",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "9",
+        "SOLO": "7",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "1",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3127273",
+      "playerName": "Frankie Luvu",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "6",
+        "SOLO": "2",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4426403",
+      "playerName": "Nick Cross",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "6",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4239694",
+      "playerName": "Amik Robertson",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "5",
+        "SOLO": "4",
+        "SACKS": "0",
+        "TFL": "2",
+        "PD": "1",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4363097",
+      "playerName": "Percy Butler",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "5",
+        "SOLO": "2",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "1",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4360378",
+      "playerName": "Quan Martin",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "5",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4361422",
+      "playerName": "Odafe Oweh",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "4",
+        "SOLO": "3",
+        "SACKS": "1",
+        "TFL": "1",
+        "PD": "0",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4574689",
+      "playerName": "Trey Amos",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "4",
+        "SOLO": "2",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3886601",
+      "playerName": "Shy Tuttle",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "3",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4242205",
+      "playerName": "K'Lavon Chaisson",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4427984",
+      "playerName": "Kain Medrano",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4572460",
+      "playerName": "Tyler Owens",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "2980080",
+      "playerName": "Deatrich Wise Jr.",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3929956",
+      "playerName": "Tim Settle",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4360635",
+      "playerName": "Chig Okonkwo",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3929865",
+      "playerName": "Charles Omenihu",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "2",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4361090",
+      "playerName": "Ale Kaho",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4430560",
+      "playerName": "Jer'Zhan Newton",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "5081392",
+      "playerName": "Joshua Josephs",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3928979",
+      "playerName": "Dorance Armstrong",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "0",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3943270",
+      "playerName": "Rasul Douglas",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "0",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "1",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3943270",
+      "playerName": "Rasul Douglas",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "interceptions",
+      "stats": {
+        "INT": "1",
+        "YDS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4426948",
+      "playerName": "Luke McCaffrey",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "kickReturns",
+      "stats": {
+        "NO": "3",
+        "YDS": "58",
+        "AVG": "19.3",
+        "LONG": "25",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4426948",
+      "playerName": "Luke McCaffrey",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "puntReturns",
+      "stats": {
+        "NO": "2",
+        "YDS": "13",
+        "AVG": "6.5",
+        "LONG": "12",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "5081335",
+      "playerName": "Drew Stevens",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "kicking",
+      "stats": {
+        "FG": "1/1",
+        "PCT": "100.0",
+        "LONG": "46",
+        "XP": "3/3",
+        "PTS": "6"
+      }
+    },
+    {
+      "playerId": "16166",
+      "playerName": "Tress Way",
+      "team": "Washington Commanders",
+      "teamAbbr": "WSH",
+      "statType": "punting",
+      "stats": {
+        "NO": "4",
+        "YDS": "198",
+        "AVG": "49.5",
+        "TB": "0",
+        "In 20": "0",
+        "LONG": "55"
+      }
+    },
+    {
+      "playerId": "4433970",
+      "playerName": "J.J. McCarthy",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "passing",
+      "stats": {
+        "C/ATT": "23/36",
+        "YDS": "293",
+        "AVG": "8.1",
+        "TD": "1",
+        "INT": "1",
+        "SACKS": "1-10",
+        "QBR": "60.9",
+        "RTG": "86.9"
+      }
+    },
+    {
+      "playerId": "4696981",
+      "playerName": "Cam Skattebo",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "18",
+        "YDS": "78",
+        "AVG": "4.3",
+        "TD": "2",
+        "LONG": "14"
+      }
+    },
+    {
+      "playerId": "4433970",
+      "playerName": "J.J. McCarthy",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "6",
+        "YDS": "34",
+        "AVG": "5.7",
+        "TD": "0",
+        "LONG": "12"
+      }
+    },
+    {
+      "playerId": "4040761",
+      "playerName": "Devin Singletary",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "1",
+        "YDS": "3",
+        "AVG": "3.0",
+        "TD": "0",
+        "LONG": "3"
+      }
+    },
+    {
+      "playerId": "2969939",
+      "playerName": "Jameis Winston",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "rushing",
+      "stats": {
+        "CAR": "2",
+        "YDS": "1",
+        "AVG": "0.5",
+        "TD": "0",
+        "LONG": "1"
+      }
+    },
+    {
+      "playerId": "4361050",
+      "playerName": "Isaiah Likely",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "9",
+        "YDS": "127",
+        "AVG": "14.1",
+        "TD": "1",
+        "LONG": "66",
+        "TGTS": "11"
+      }
+    },
+    {
+      "playerId": "4682648",
+      "playerName": "Malachi Fields",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "3",
+        "YDS": "62",
+        "AVG": "20.7",
+        "TD": "0",
+        "LONG": "25",
+        "TGTS": "4"
+      }
+    },
+    {
+      "playerId": "4696981",
+      "playerName": "Cam Skattebo",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "3",
+        "YDS": "44",
+        "AVG": "14.7",
+        "TD": "0",
+        "LONG": "34",
+        "TGTS": "4"
+      }
+    },
+    {
+      "playerId": "4595348",
+      "playerName": "Malik Nabers",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "5",
+        "YDS": "44",
+        "AVG": "8.8",
+        "TD": "0",
+        "LONG": "37",
+        "TGTS": "7"
+      }
+    },
+    {
+      "playerId": "4429148",
+      "playerName": "Theo Johnson",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "1",
+        "YDS": "8",
+        "AVG": "8.0",
+        "TD": "0",
+        "LONG": "8",
+        "TGTS": "3"
+      }
+    },
+    {
+      "playerId": "4040655",
+      "playerName": "Darnell Mooney",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "receiving",
+      "stats": {
+        "REC": "2",
+        "YDS": "8",
+        "AVG": "4.0",
+        "TD": "0",
+        "LONG": "6",
+        "TGTS": "5"
+      }
+    },
+    {
+      "playerId": "4595348",
+      "playerName": "Malik Nabers",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "fumbles",
+      "stats": {
+        "FUM": "1",
+        "LOST": "1",
+        "REC": "0"
+      }
+    },
+    {
+      "playerId": "4361050",
+      "playerName": "Isaiah Likely",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "fumbles",
+      "stats": {
+        "FUM": "1",
+        "LOST": "0",
+        "REC": "1"
+      }
+    },
+    {
+      "playerId": "4691889",
+      "playerName": "Greg Desrosiers Jr.",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "fumbles",
+      "stats": {
+        "FUM": "1",
+        "LOST": "0",
+        "REC": "0"
+      }
+    },
+    {
+      "playerId": "4695086",
+      "playerName": "Chandler Martin",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "fumbles",
+      "stats": {
+        "FUM": "0",
+        "LOST": "0",
+        "REC": "1"
+      }
+    },
+    {
+      "playerId": "4950400",
+      "playerName": "Arvell Reese",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "13",
+        "SOLO": "4",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4371961",
+      "playerName": "Micah McFadden",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "10",
+        "SOLO": "5",
+        "SACKS": "0",
+        "TFL": "1",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4426326",
+      "playerName": "Kayvon Thibodeaux",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "8",
+        "SOLO": "5",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4362492",
+      "playerName": "Ar'Darius Washington",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "7",
+        "SOLO": "5",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "2",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4431321",
+      "playerName": "Dru Phillips",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "6",
+        "SOLO": "4",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "16837",
+      "playerName": "Shelby Harris",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "4",
+        "SOLO": "3",
+        "SACKS": "1",
+        "TFL": "1",
+        "PD": "0",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4361266",
+      "playerName": "Greg Newsome II",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "4",
+        "SOLO": "3",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4428328",
+      "playerName": "Deonte Banks",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "3",
+        "SOLO": "2",
+        "SACKS": "0",
+        "TFL": "1",
+        "PD": "1",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4373809",
+      "playerName": "Jevon Holland",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "3",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "1",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4725996",
+      "playerName": "Abdul Carter",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "3",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "1",
+        "PD": "0",
+        "QB HTS": "1",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "5159928",
+      "playerName": "Bobby Jamison-Travis",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "2",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "2977670",
+      "playerName": "DJ Reader",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3932901",
+      "playerName": "Elijah Campbell",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4240706",
+      "playerName": "Jason Pinnock",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4362234",
+      "playerName": "Zaire Barnes",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4427207",
+      "playerName": "Trace Ford",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4595348",
+      "playerName": "Malik Nabers",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "1",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "3042476",
+      "playerName": "Dawuane Smoot",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4426542",
+      "playerName": "Darius Alexander",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4429148",
+      "playerName": "Theo Johnson",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4430261",
+      "playerName": "Tyler Nubin",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "defensive",
+      "stats": {
+        "TOT": "1",
+        "SOLO": "0",
+        "SACKS": "0",
+        "TFL": "0",
+        "PD": "0",
+        "QB HTS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4362492",
+      "playerName": "Ar'Darius Washington",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "interceptions",
+      "stats": {
+        "INT": "1",
+        "YDS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4373809",
+      "playerName": "Jevon Holland",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "interceptions",
+      "stats": {
+        "INT": "1",
+        "YDS": "0",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4691889",
+      "playerName": "Greg Desrosiers Jr.",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "kickReturns",
+      "stats": {
+        "NO": "3",
+        "YDS": "74",
+        "AVG": "24.7",
+        "LONG": "26",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4040761",
+      "playerName": "Devin Singletary",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "kickReturns",
+      "stats": {
+        "NO": "1",
+        "YDS": "22",
+        "AVG": "22.0",
+        "LONG": "22",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "4257188",
+      "playerName": "Charlie Jones",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "puntReturns",
+      "stats": {
+        "NO": "1",
+        "YDS": "2",
+        "AVG": "2.0",
+        "LONG": "2",
+        "TD": "0"
+      }
+    },
+    {
+      "playerId": "5082424",
+      "playerName": "Dominic Zvada",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "kicking",
+      "stats": {
+        "FG": "0/1",
+        "PCT": "0.0",
+        "LONG": "0",
+        "XP": "3/3",
+        "PTS": "3"
+      }
+    },
+    {
+      "playerId": "4260224",
+      "playerName": "Jordan Stout",
+      "team": "New York Giants",
+      "teamAbbr": "NYG",
+      "statType": "punting",
+      "stats": {
+        "NO": "5",
+        "YDS": "224",
+        "AVG": "44.8",
+        "TB": "1",
+        "In 20": "2",
+        "LONG": "68"
+      }
+    }
+  ]
+}
