@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {players, games} from "../data/mockdata";
+import {players} from "../data/mockdata";
 import {getData} from "../api";
 
 type SearchPageProps = {
   onSelectPlayer: (playerName: string) => void;
+  onSelectGame: (Game: Game) => void;
 };
 
 type Team = {
@@ -11,12 +12,23 @@ type Team = {
   team_name: string;
   };
 
-function SearchPage({ onSelectPlayer }: SearchPageProps) {
+  export type Game = {
+    eventId: string;
+    homeTeam: string;
+    awayTeam: string;
+    homeScore: string;
+    awayScore: string;
+    status: string;
+    };
+
+function SearchPage({ onSelectPlayer, onSelectGame }: SearchPageProps) {
   const [search, setSearch] = useState("");
   const [teams, setTeams] = useState<Team[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-    useEffect(() => {
+    
+  useEffect(() => {
     let active = true;
   
     async function loadTeams() {
@@ -43,6 +55,33 @@ function SearchPage({ onSelectPlayer }: SearchPageProps) {
     };
   }, []);
 
+  useEffect(() => {
+    let active = true;
+  
+    async function loadGames() {
+      try {
+        const data = await getData<Game[]>("/games/live");
+        if (active) {
+          setGames(data);
+        }
+      } catch {
+        if (active) {
+          setError("Unable to load games. Please try again later.");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }
+  
+    loadGames();
+  
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const searchTerm = search.toLowerCase();
   const filteredPlayers = players.filter((player)=>
     player.toLowerCase().includes(searchTerm));
@@ -52,7 +91,8 @@ function SearchPage({ onSelectPlayer }: SearchPageProps) {
     team.team_abbr.toLowerCase().includes(searchTerm));
 
 const filteredGames = games.filter((game)=>
-  game.toLowerCase().includes(searchTerm));
+  game.homeTeam.toLowerCase().includes(searchTerm) ||
+  game.awayTeam.toLowerCase().includes(searchTerm));
 
 return (
   <div>
@@ -80,6 +120,23 @@ return (
 ))
 )}
 
+<h2>Games</h2>
+      {search !== "" && filteredGames.length === 0 ? (
+  <p>No games found.</p>
+) : (
+  filteredGames.map((game) => (
+  <button
+    key ={game.eventId}
+    type="button"
+    onClick={() => onSelectGame(game)}
+  >
+    {game.awayTeam} vs {game.homeTeam} - {game.status}
+  </button>
+))
+)}
+
+
+
 <h2>Teams</h2>
     {loading ? (
       <p role="status">Loading teams...</p>
@@ -93,10 +150,6 @@ return (
       ))
     )}
 
-      <h2>Upcoming Games</h2>
-      {filteredGames.map((game) => (
-        <p key={game}>{game}</p>
-      ))}
   </div>
   );
 }
