@@ -11,9 +11,9 @@ function ProfilePagePreview() {
         <button onClick={() => setPage("team")}>Team Page</button>
       </nav>
 
-      {page === "player" ? <PlayerPage /> : <TeamPage />}
+      {page === "player" ? <PlayerPage playerName="Patrick Mahomes" /> : <TeamPage />}
     </>
   );
 }
 
-export default ProfilePageTest;
+export default ProfilePagePreview;

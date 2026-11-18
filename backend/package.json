@@ -6,7 +6,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
+    "better-sqlite3": "12.11.1",
+    "csv-parse": "^7.0.3",
     "express": "^5.1.0"
   },
   "devDependencies": {
