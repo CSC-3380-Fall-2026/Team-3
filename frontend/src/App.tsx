@@ -15,6 +15,7 @@ import TeamPage from "./pages/teampage";
 import GamePage from "./pages/gamepage";
 import PredictionPageTest from "./pages/predictionpagetest";
 import StartSit from "./startsit";
+import StatusPanel from "./components/StatusPanel";
 
 type Page = "search" | "startsit" | "predictions" | "team" | "game";
 
@@ -38,6 +39,36 @@ function App() {
 
       {showTeams ? (
         <div>
+            <h1>SmartBet</h1>
+            <nav> {/*page selection*/}
+                <a href="#" onClick={() => setCurrentPage("search")}>NFL Data</a>
+                <a href="#" onClick={() => setCurrentPage("startsit")}>Start-Sit</a>
+                <a href="#" onClick={() => setCurrentPage("predictions")}>Predictions</a>
+                <a href="#" onClick={() => setCurrentPage("team")}>Team Page</a>
+                <a href="#" onClick={() => setCurrentPage("game")}>Game Page</a>
+                <a href="#" onClick={() => setCurrentPage("status")}>
+    System Status
+</a>
+            </nav>
+            {selectedPlayer === null ? (
+                <>
+                    {currentPage === "search" && (
+                        <SearchPage onSelectPlayer={setSelectedPlayer}/>
+                    )}
+                    {currentPage === "startsit" && <StartSit/>}
+                    {currentPage === "predictions" && <PredictionPageTest/>}
+                    {currentPage === "team" && <TeamPage/>}
+                    {currentPage === "game" && <GamePage/>}
+                    {currentPage === "status" && <StatusPanel />}
+                </>
+            ) : (
+                <div>
+                    <button onClick={() => setSelectedPlayer(null)}>
+                        Back to Search
+                    </button>
+                    <PlayerPage playerName={selectedPlayer}/>
+                </div>
+            )}
           <button onClick={() => setShowTeams(false)}>
             Back to Search
           </button>
