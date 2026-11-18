@@ -29,12 +29,34 @@ const navigation: { id: Page; label: string }[] = [
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("search");
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [showTeams, setShowTeams] = useState(false);
 
   const navigate = (page: Page) => {
     setCurrentPage(page);
     setSelectedPlayer(null);
   };
 
+      {showTeams ? (
+        <div>
+          <button onClick={() => setShowTeams(false)}>
+            Back to Search
+          </button>
+
+          <TeamPage />
+        </div>
+      ) : selectedPlayer === null ? (
+        <div>
+          <button onClick={() => setShowTeams(true)}>
+            Teams
+          </button>
+
+          <SearchPage onSelectPlayer={setSelectedPlayer} />
+        </div>
+      ) : (
+        <div>
+          <button onClick={() => setSelectedPlayer(null)}>
+            Back to Search
+          </button>
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -113,5 +135,6 @@ function App() {
   );
 }
 
+export default App;
 export default App;
 
