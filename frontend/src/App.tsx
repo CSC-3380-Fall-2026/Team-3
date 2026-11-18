@@ -1,4 +1,11 @@
 
+import NFLDataPage from "./pages/nfldatapage";
+
+function App() {
+  return (
+    <div>
+      <h1>SmartBet</h1>
+      <NFLDataPage />
 import { useState } from "react";
 import SearchPage from "./components/SearchPage";
 import PlayerPage from "./pages/playerpage";
@@ -26,3 +33,4 @@ function App() {
 }
 
 export default App;
+
