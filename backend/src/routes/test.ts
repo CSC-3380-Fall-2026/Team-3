@@ -36,6 +36,7 @@ router.get("/teams/search", (req, res) => {
         .all(`%${name}%`, `%${name}%`);
 
     res.json(teams);
+});
 
 router.get("/teams/:teamAbbr/games", (req, res) => {
   const { teamAbbr } = req.params;
