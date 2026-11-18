@@ -36,6 +36,28 @@ router.get("/teams/search", (req, res) => {
         .all(`%${name}%`, `%${name}%`);
 
     res.json(teams);
+
+router.get("/teams/:teamAbbr/games", (req, res) => {
+  const { teamAbbr } = req.params;
+
+  const games = db.prepare(`
+    SELECT
+      game_id,
+      game_date,
+      home_team,
+      away_team,
+      home_score,
+      away_score
+    FROM games
+    WHERE (home_team = ? OR away_team = ?)
+      AND game_status = 'final'
+      AND home_score IS NOT NULL
+      AND away_score IS NOT NULL
+    ORDER BY game_date DESC
+    LIMIT 3
+  `).all(teamAbbr, teamAbbr);
+
+  res.json(games);
 });
 
 router.get("/players/search", (req, res) => {

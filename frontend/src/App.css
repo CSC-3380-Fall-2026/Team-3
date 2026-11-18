@@ -1,0 +1,425 @@
+
+/* ========================================
+   SMARTBET — APPLICATION STYLES
+   ======================================== */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Application shell */
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* Header */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  width: 100%;
+  background: #131a22;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  max-width: 1440px;
+  min-height: 68px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
+
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #f0f3f6;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+
+.app-logo:hover {
+  color: #fff;
+}
+
+.app-logo span {
+  color: var(--accent);
+}
+
+/* Navigation */
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.app-nav a,
+.app-nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  min-height: 100%;
+  padding: 0 16px;
+
+  background: transparent;
+  color: var(--text-secondary);
+
+  border: 0;
+  border-radius: 0;
+
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.app-nav a:hover,
+.app-nav button:hover {
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+}
+
+.app-nav .active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.app-nav .active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* Main content */
+
+.app-main {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 40px 36px 80px;
+}
+
+.app-main > h1 {
+  margin-bottom: 8px;
+}
+
+.app-main > p {
+  margin-bottom: 28px;
+}
+
+/* Shared sections */
+
+.app-main section {
+  margin: 24px 0;
+  padding: 26px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.app-main section > h2:first-child {
+  margin-bottom: 20px;
+}
+
+.app-main section > h3:first-child {
+  margin-bottom: 16px;
+}
+
+/* Forms and search */
+
+.app-main input[type="search"],
+.app-main input[type="text"] {
+  width: 100%;
+  max-width: 480px;
+}
+
+.app-main input[type="search"] {
+  padding-left: 14px;
+}
+
+.app-main button {
+  margin: 3px 5px 3px 0;
+}
+
+/* Profile layout */
+
+.profile-page {
+  width: 100%;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  padding: 30px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.profile-header h1 {
+  margin: 5px 0 8px;
+  font-size: 28px;
+}
+
+.profile-header p {
+  margin-bottom: 0;
+}
+
+.profile-label {
+  margin: 0;
+  color: var(--accent) !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 82px;
+  height: 82px;
+
+  background: #20342f;
+  border: 1px solid #35574c;
+  border-radius: var(--radius-md);
+
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.team-avatar {
+  background: #202d3a;
+  border-color: #34495b;
+  color: #9ebcd1;
+}
+
+/* Profile sections */
+
+.profile-section {
+  margin-top: 22px;
+}
+
+.profile-section h2 {
+  margin-bottom: 22px;
+  font-size: 17px;
+}
+
+/* Statistics */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stat-card {
+  min-width: 0;
+  padding: 22px;
+
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.stat-card p {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stat-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+.stat-card:hover {
+  border-color: var(--border-light);
+}
+
+/* Tables */
+
+.profile-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.profile-table {
+  min-width: 650px;
+}
+
+.profile-table thead {
+  background: var(--surface-raised);
+}
+
+.profile-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Placeholder and status text */
+
+.placeholder-text {
+  padding: 12px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+[role="alert"] {
+  color: var(--danger);
+}
+
+[role="status"] {
+  color: var(--text-secondary);
+}
+
+/* Embedded game content */
+
+iframe {
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .app-header-inner {
+    padding: 0 24px;
+  }
+
+  .app-main {
+    padding: 32px 24px 60px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .app-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 16px 18px 0;
+  }
+
+  .app-logo {
+    margin-bottom: 14px;
+  }
+
+  .app-nav {
+    width: 100%;
+    overflow-x: auto;
+    gap: 0;
+    scrollbar-width: thin;
+  }
+
+  .app-nav a,
+  .app-nav button {
+    min-height: 44px;
+    padding: 0 13px;
+    font-size: 12px;
+  }
+
+  .app-main {
+    padding: 26px 16px 50px;
+  }
+
+  .app-main section {
+    padding: 18px;
+    margin: 16px 0;
+  }
+
+  .profile-header {
+    padding: 22px;
+    gap: 16px;
+  }
+
+  .profile-header h1 {
+    font-size: 23px;
+  }
+
+  .profile-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 18px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 18px;
+  }
+
+  .stat-card h3 {
+    font-size: 21px;
+  }
+
+  th, td {
+    padding: 11px 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+.back-button {
+  margin-bottom: 24px !important;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--accent);
+}
