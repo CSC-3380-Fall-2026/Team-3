@@ -1,4 +1,11 @@
 
+import NFLDataPage from "./pages/nfldatapage";
+
+function App() {
+  return (
+    <div>
+      <h1>SmartBet</h1>
+      <NFLDataPage />
 import { useState } from "react";
 import "./App.css";
 
@@ -107,3 +114,4 @@ function App() {
 }
 
 export default App;
+
