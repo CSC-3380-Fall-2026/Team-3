@@ -55,49 +55,25 @@ Kanban Board:(https://github.com/users/dthriffiley/projects/1/views/1)
 Designs: [link]\
 Styles Guide(s): [link]
 
-# How to Run Dev and Test Environment
-pending
+## How to Run Dev and Test Environment
+### How to Download:
+`git clone` https://github.com/CSC-3380-Fall-2026/Team-3.git, then `cd Team-3`.
 
-## Dependencies
-React - Frontend interface and reusable components
-Typescript - Frontend and backend application logic
-SQLite - Storage for game data
-Front page will also use HTML/CSS for styling
+### Dependencies:
+Node.js v24.14.0 (Download from nodejs.org)
+npm 11.9.0 (comes with Node.js)
+
+### Install:
+From the Team-3 folder: 
+cd backend and `npm install` THEN cd ../frontend and `npm install`.
+
+### Run:
+Open two terminals In the first terminal; `cd backend`, then `npm run dev`, and wait for "Server running on port 3000" & In the second terminal: `cd frontend`, then `npm run dev`, then open http://localhost:5173.
+
+### Platforms Tested:
+macOS on macbook
 
 Planned APIs and Data:
 NFLVERSE - historical NFL play-by-play
 ESPN API - live game data and scores + odds
 OPENAI API - Sports Data Chatbot
-
-  
-### Downloading Dependencies
-Describe where to download the dependencies here. Some will likely require a web download. Provide links here. For IDE extensions, make sure your project works with the free version of them, and detail which IDE(s) these are available in. 
-
-*** add once setup is finalized
-
-
-## Commands
-Describe how the commands and process to launch the project on the main branch in such a way that anyone working on the project knows how to check the affects of any code they add.
-
-```sh
-Example terminal command syntax
-```
-
-It is very common in these sections to see code in peculiar boxes to help them stand out. Check the markdown section of the Project Specifications to see how to add more / customize these.
-
-```python
-def code_highlight_example(m: int, m: float, s: str) -> str:
-	return s + str(n*m)
-```
-
-```java
-public static void main(String[] args){
-	System.out.println("Hello, World!");
-}
-```
-
-```c#
-static void Main(){
-	Console.WriteLine("Hello, World!");
-}
-```
