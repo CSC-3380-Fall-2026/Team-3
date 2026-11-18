@@ -3,6 +3,9 @@ import testRoutes from "./routes/test";
 import gameRoutes from "./routes/games";
 import liveGameRoutes from "./routes/liveGames";
 import livePlayerStatsRoutes from "./routes/livePlayerStats";
+import healthRoutes from "./routes/health";
+import historicalSituationsRoutes from "./routes/historicalSituations";
+import playerPropsRoutes from "./routes/playerProps";
 
 const app = express();
 
@@ -13,5 +16,9 @@ app.use("/api", gameRoutes);
 
 app.use("/api", liveGameRoutes);
 app.use("/api", livePlayerStatsRoutes);
+app.use("/api", historicalSituationsRoutes);
+app.use("/api", playerPropsRoutes);
+
+app.use("/api", healthRoutes);
 
 export default app;
