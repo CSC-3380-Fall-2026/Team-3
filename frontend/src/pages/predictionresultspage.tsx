@@ -1,178 +1,326 @@
-import { useState } from "react";
 
-type historicalResults = {
-  playerId: string;
-  stat: string;
-  quarter: number;
-  currentValue: number;
-  sampleSize:number;
-  averageFinalValue: number|null;
-  line: number|null;
-  overCount: number|null;
-  underCount: number|null;
-  pushCount:number|null;
-  overPercentage:number|null;
-  underPercentage:number|null;
-  pushPercentage:number|null; 
-  matches: {
-    game_id: string;
-    season: number
-    week:number;
-    home_team: string;
-    away_team: string;
-    value_at_point: number;
-    final_value:number;
-}[];
+import { mockPredictions } from "../data/predictionmockdata";
+
+type HistoricalGame = {
+  opponent: string;
+  yards: number;
 };
 
+type Prediction = {
+  player: string;
+  team: string;
+  opponent: string;
+  position: string;
+  gameSituation: {
+    quarter: string;
+    timeRemaining: string;
+    score: string;
+    down: string;
+    fieldPosition: string;
+  };
+  statistic: string;
+  bettingLine: number;
+  projectedValue: number;
+  predictedOutcome: string;
+  estimatedProbability: number;
+  overOdds?: number;
+  underOdds?: number;
+  similarSituations: HistoricalGame[];
+};
+
+function impliedProbability(odds?: number): number | null {
+  if (
+    odds === undefined ||
+    !Number.isFinite(odds) ||
+    Math.abs(odds) < 100
+  ) {
+    return null;
+  }
+
+  if (odds < 0) {
+    return (Math.abs(odds) / (Math.abs(odds) + 100)) * 100;
+  }
+
+  return (100 / (odds + 100)) * 100;
+}
+
+function formatOdds(odds?: number): string {
+  if (odds === undefined) return "Unavailable";
+  return odds > 0 ? `+${odds}` : String(odds);
+}
+
 function PredictionResultsPage() {
-  const [playerName, setPlayerName] = useState("");
-  const [searchResults, setSearchResults] = useState<
-  {
-    player_id: string;
-    player_name: string;
-    position: string;
-    team_abbr: string;
-  }[]
-  >([]);
-  const [selectedPlayerId, setSelectedPlayerId] = useState<string|null>(null);
-  const [statistic, setStatistic] = useState("passing_yards");
-  const [quarter, setQuarter] = useState(1);
-  const [currentValue, setCurrentValue] = useState("");
-  const [line, setLine] = useState("");
-  const [historicalResults, setHistoricalResults] = 
-    useState<historicalResults | null>(null);
+  const predictions: Prediction[] = mockPredictions;
 
   return (
     <main style={{ maxWidth: "1100px", margin: "0 auto" }}>
       <h1>SmartBet Prediction Results</h1>
-      <label htmlFor="player-name">Player Name </label>
-      <input
-      id = "player-name"
-      type = "text"
-      placeholder="Search for NFL Players"
-      value={playerName}
-      onChange={(event) => setPlayerName(event.target.value)}
-      />
-      <button
-      type="button"
-      onClick={async ()=>{
-        const response = await fetch(
-          `/api/players/search?name=${encodeURIComponent(playerName)}`
-        );
-        const players = await response.json();
-        setSearchResults(players);
-      }}
-      >Search players</button>
-      {searchResults.map((player) => (
-        <button 
-        type="button"
-        key={player.player_id}
-        onClick={() => setSelectedPlayerId(player.player_id)}
-        >
-          {player.player_name} - {player.position} ({player.team_abbr})
-          </button>
-      ))}
-      {selectedPlayerId&&(
-        <p>
-          <strong>Selected Players:</strong>{" "}
-          {searchResults.find(
-            (player) => player.player_id === selectedPlayerId
-          )?.player_name}
-        </p>
+
+      <p>
+        Explore player prop outcomes using comparable historical
+        situations and sportsbook betting lines.
+      </p>
+
+      <p>
+        <strong>Demo Data:</strong> These examples are not live
+        sportsbook predictions.
+      </p>
+
+      {predictions.length === 0 && (
+        <p>No prediction results are available.</p>
       )}
-      <label>
-        Stat:
-        <select 
-        value={statistic}
-        onChange={(event) => setStatistic(event.target.value)}
-        >
-          <option value={"passing_yards"}>Passing Yards</option>
-          <option value={"rushing_yards"}>Rushing Yards</option>
-          <option value={"receiving_yards"}>Receiving Yards</option>
-        </select>
-      </label>
-      <label>
-        Quarter:
-        <select 
-        value={quarter}
-        onChange={(event) => setQuarter(Number(event.target.value))}
-        >
-          <option value={1}>1st Quarter</option>
-          <option value={2}>2nd Quarter</option>
-          <option value={3}>3rd Quarter</option>
-          <option value={4}>4th Quarter</option>
-        </select>
-      </label>
-      <label>
-        Current Yards:
-        <input 
-        type="number"
-        value={currentValue}
-        onChange={(event) => setCurrentValue(event.target.value)}
-        placeholder="Enter Current # of yards"
-        >
-        </input>
-      </label>
-      <label>
-        Over or Under Line:
-        <input 
-        type="number"
-        value={line}
-        onChange={(event) => setLine(event.target.value)}
-        placeholder="Enter line"
-        >
-        </input>
-      </label>
-      <button type="button"
-      onClick={async() => {
-        if(!selectedPlayerId||currentValue ===""|| line ===""){
-          alert("Select a player & enter current yards");
-          return;
-        }
-        
-        const parameters = new URLSearchParams(
-          {
-            playerId: selectedPlayerId,
-            stat: statistic,
-            quarter: String(quarter),
-            currentValue: currentValue,
-            line: line,
-            
-          }
+
+      {predictions.map((prediction, predictionIndex) => {
+        const games = prediction.similarSituations;
+        const sampleSize = games.length;
+
+        const totalYards = games.reduce(
+          (sum, game) => sum + game.yards,
+          0
         );
-         const response = await fetch(
-          `/api/historical-situations?${parameters.toString()}`
+
+        const historicalAverage =
+          sampleSize > 0 ? totalYards / sampleSize : null;
+
+        const gamesOver = games.filter(
+          (game) => game.yards > prediction.bettingLine
+        ).length;
+
+        const gamesUnder = games.filter(
+          (game) => game.yards < prediction.bettingLine
+        ).length;
+
+        const gamesPush = games.filter(
+          (game) => game.yards === prediction.bettingLine
+        ).length;
+
+        const decidedGames = gamesOver + gamesUnder;
+
+        const overRate =
+          decidedGames > 0
+            ? (gamesOver / decidedGames) * 100
+            : null;
+
+        const underRate =
+          decidedGames > 0
+            ? (gamesUnder / decidedGames) * 100
+            : null;
+
+        const overImplied = impliedProbability(
+          prediction.overOdds
         );
-        const data = await response.json();
-        setHistoricalResults(data);
-      }}
-      
-      >
-        Find Historical Scenarios
-      </button>
-      {historicalResults&&(
-        <section>
-          <h2>Comparable Historical Scenarios</h2>
-          <p>Games:{historicalResults.sampleSize}</p>
-          <p>Average Final Yards:{historicalResults.averageFinalValue??"No data"}</p>
-          <p>Games Over: {historicalResults.overCount ?? "No data"}</p>
-          <p>Games Under: {historicalResults.underCount ?? "No data"}</p>
-          <p>Pushes: {historicalResults.pushCount ?? "No data"}</p>
-          <p>Over Percentage: {historicalResults.overPercentage ?? "No data"}</p>
-          <p>Under Percentage: {historicalResults.underPercentage ?? "No data"}</p>
-          <p>Push Percentage: {historicalResults.pushPercentage ?? "No data"}</p>
-          <h3>Game Matches:</h3>
-          {historicalResults.matches.map((game) => (
-        <p key={game.game_id}>
-        
-          Week {game.week}: {game.away_team} @ {game.home_team}
-            - Through Q{historicalResults.quarter}: {game.value_at_point} yards
-            - Final: {game.final_value} yards
-          </p>
-      ))}
-        </section>
-      )}
+
+        const underImplied = impliedProbability(
+          prediction.underOdds
+        );
+
+        return (
+          <section
+            key={`${prediction.player}-${predictionIndex}`}
+            style={{
+              margin: "28px 0",
+              padding: "24px",
+              border: "1px solid #59636e",
+              borderRadius: "10px",
+            }}
+          >
+            <header>
+              <h2>{prediction.player}</h2>
+
+              <p>
+                {prediction.position} | {prediction.team} vs.{" "}
+                {prediction.opponent}
+              </p>
+            </header>
+
+            <h3>Current Player Situation</h3>
+
+            <p>
+              <strong>Quarter:</strong>{" "}
+              {prediction.gameSituation.quarter}
+            </p>
+
+            <p>
+              <strong>Time Remaining:</strong>{" "}
+              {prediction.gameSituation.timeRemaining}
+            </p>
+
+            <p>
+              <strong>Score:</strong>{" "}
+              {prediction.gameSituation.score}
+            </p>
+
+            <p>
+              <strong>Down:</strong>{" "}
+              {prediction.gameSituation.down}
+            </p>
+
+            <p>
+              <strong>Field Position:</strong>{" "}
+              {prediction.gameSituation.fieldPosition}
+            </p>
+
+            <hr />
+
+            <h3>Sportsbook Betting Line</h3>
+
+            <p>
+              <strong>Market:</strong> {prediction.statistic}
+            </p>
+
+            <p>
+              <strong>Line:</strong> {prediction.bettingLine}
+            </p>
+
+            <p>
+              <strong>Over Odds:</strong>{" "}
+              {formatOdds(prediction.overOdds)}
+            </p>
+
+            <p>
+              <strong>Under Odds:</strong>{" "}
+              {formatOdds(prediction.underOdds)}
+            </p>
+
+            <hr />
+
+            <h3>Historical Comparison</h3>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(170px, 1fr))",
+                gap: "16px",
+                marginBottom: "20px",
+              }}
+            >
+              <div>
+                <h4>Comparable Games</h4>
+                <p>{sampleSize}</p>
+              </div>
+
+              <div>
+                <h4>Average Final Outcome</h4>
+                <p>
+                  {historicalAverage === null
+                    ? "No data"
+                    : historicalAverage.toFixed(1)}
+                </p>
+              </div>
+
+              <div>
+                <h4>Over Hit Rate</h4>
+                <p>
+                  {overRate === null
+                    ? "No data"
+                    : `${overRate.toFixed(1)}%`}
+                </p>
+              </div>
+
+              <div>
+                <h4>Under Hit Rate</h4>
+                <p>
+                  {underRate === null
+                    ? "No data"
+                    : `${underRate.toFixed(1)}%`}
+                </p>
+              </div>
+            </div>
+
+            <p>
+              Historical Results: {gamesOver} Over,{" "}
+              {gamesUnder} Under, {gamesPush} Push
+            </p>
+
+            <h4>Comparable Historical Games</h4>
+
+            {sampleSize === 0 ? (
+              <p>No comparable historical games available.</p>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Opponent</th>
+                      <th>Final {prediction.statistic}</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {games.map((game, index) => (
+                      <tr key={`${game.opponent}-${index}`}>
+                        <td>{game.opponent}</td>
+                        <td>{game.yards}</td>
+                        <td>
+                          {game.yards > prediction.bettingLine
+                            ? "Over"
+                            : game.yards < prediction.bettingLine
+                            ? "Under"
+                            : "Push"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <hr />
+
+            <h3>Sportsbook Implied Probability</h3>
+
+            <p>
+              <strong>Over:</strong>{" "}
+              {overImplied === null
+                ? "Unavailable — sportsbook odds required"
+                : `${overImplied.toFixed(2)}%`}
+            </p>
+
+            <p>
+              <strong>Under:</strong>{" "}
+              {underImplied === null
+                ? "Unavailable — sportsbook odds required"
+                : `${underImplied.toFixed(2)}%`}
+            </p>
+
+            <p>
+              <small>
+                Implied probabilities are calculated from American
+                odds and include the sportsbook margin.
+              </small>
+            </p>
+
+            <hr />
+
+            <h3>Prediction Summary</h3>
+
+            <p>
+              <strong>Example Projected Value:</strong>{" "}
+              {prediction.projectedValue}
+            </p>
+
+            <p>
+              <strong>Example Predicted Outcome:</strong>{" "}
+              {prediction.predictedOutcome}
+            </p>
+
+            <p>
+              <strong>Example Estimated Probability:</strong>{" "}
+              {prediction.estimatedProbability}%
+            </p>
+
+            <p>
+              <small>
+                The example estimate is separate from the
+                sportsbook implied probability and historical
+                hit rate.
+              </small>
+            </p>
+          </section>
+        );
+      })}
     </main>
   );
 }
