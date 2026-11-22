@@ -2,7 +2,9 @@ import { describe, it, expect, vi } from "vitest";
 import express from "express";
 import request from "supertest";
 
-const mockAll = vi.fn();
+const { mockAll } = vi.hoisted(() => ({
+  mockAll: vi.fn()
+}));
 
 vi.mock("../database", () => ({
   default: {
