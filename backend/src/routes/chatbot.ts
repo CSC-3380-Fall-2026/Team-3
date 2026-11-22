@@ -198,11 +198,12 @@ router.post("/chatbot", (req, res) => {
       SELECT player_id, player_name, position, team_abbr
       FROM players
     `).all() as Player[];
+const matchedPlayers = players.filter((player) => {
+  const name = player.player_name.trim();
 
-    const matchedPlayers = players.filter((player) => {
-      return question.includes(player.player_name.toLowerCase());
-    });
-
+  return name.length > 0 &&
+    question.includes(name.toLowerCase());
+});
     if (matchedPlayers.length > 1) {
       return res.json({
         answer:
