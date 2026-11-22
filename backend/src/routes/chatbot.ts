@@ -257,13 +257,13 @@ router.post("/chatbot", (req, res) => {
           END AS opponent,
           player_stats.passing_yards,
           player_stats.passing_tds,
-          player_stats.interceptions,
+          player_stats.passing_interceptions AS interceptions,
           player_stats.rushing_yards,
           player_stats.rushing_tds,
           player_stats.receiving_yards,
           player_stats.receiving_tds,
           player_stats.receptions,
-          player_stats.fumbles
+          player_stats.fumbles_lost AS fumbles
         FROM player_stats
         JOIN players ON player_stats.player_id = players.player_id
         JOIN games ON player_stats.game_id = games.game_id
