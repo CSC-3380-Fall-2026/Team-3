@@ -7,6 +7,7 @@ import healthRoutes from "./routes/health";
 import historicalSituationsRoutes from "./routes/historicalSituations";
 import playerPropsRoutes from "./routes/playerProps";
 import demoReplayRoutes from "./routes/demoReplay";
+import chatbotRoutes from "./routes/chatbot";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api", testRoutes);
 app.use("/api", gameRoutes);
+app.use("/api", chatbotRoutes);
 
 app.use("/api", liveGameRoutes);
 app.use("/api", livePlayerStatsRoutes);
