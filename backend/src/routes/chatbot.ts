@@ -108,12 +108,12 @@ function formatPlayerStats(totals: StatTotals): string {
 }
 
 function formatGame(game: Game): string {
-  const hasScore =
-    game.home_score !== null && game.away_score !== null;
-
   let result = `${game.away_team} vs ${game.home_team}`;
 
-  if (hasScore) {
+  if (
+    game.home_score !== null &&
+    game.away_score !== null
+  ) {
     result += ` | ${game.away_team} ${game.away_score} - ${game.home_team} ${game.home_score}`;
 
     if (game.home_score > game.away_score) {
@@ -160,7 +160,7 @@ router.post("/chatbot", (req, res) => {
     ) {
       return res.json({
         answer:
-          "I can help with factual NFL information, including player statistics, teams, games, and historical results!",
+          "I can help with factual NFL information, including player statistics, teams, games, and historical results. I don't provide gambling or betting recommendations.",
         sources: ["SmartBet NFL information"]
       });
     }
