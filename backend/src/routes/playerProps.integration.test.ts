@@ -1,10 +1,12 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import express from "express";
 import request from "supertest";
 
 const app = express();
 
-vi.stubEnv("SPORTSGAMEODDS_API_KEY", "");
+beforeEach(() => {
+  vi.stubEnv("SPORTSGAMEODDS_API_KEY", "");
+});
 
 import playerPropsRoutes from "./playerProps";
 
