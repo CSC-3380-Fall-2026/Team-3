@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 type Message = {
   role: "user" | "assistant";
@@ -18,7 +18,7 @@ function ChatbotPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function sendMessage(event: React.FormEvent) {
+ async function sendMessage(event: FormEvent) {
     event.preventDefault();
 
     const question = input.trim();
