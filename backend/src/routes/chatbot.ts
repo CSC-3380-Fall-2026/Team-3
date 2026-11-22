@@ -1,19 +1,59 @@
 import { Router } from "express";
-import OpenAI from "openai";
 import db from "../database";
 
 const router = Router();
 
-const STOP_WORDS = new Set([
-  "what", "when", "where", "who", "which", "how",
-  "did", "does", "was", "were", "the", "and", "for",
-  "with", "from", "that", "this", "about", "tell",
-  "show", "give", "has", "have", "had", "his", "her",
-  "their", "they", "game", "games", "player", "players",
-  "stats", "statistics", "season", "week"
-]);
+type Team = {
+  team_abbr: string;
+  team_name: string;
+  team_conf: string;
+  team_division: string;
+};
 
-router.post("/chatbot", async (req, res) => {
+type Player = {
+  player_id: string;
+  player_name: string;
+  position: string;
+  team_abbr: string;
+};
+
+type Game = {
+  game_id: string;
+  season: number;
+  week: number;
+  game_date: string;
+  home_team: string;
+  away_team: string;
+  home_score: number | null;
+  away_score: number | null;
+  game_status: string;
+};
+
+type PlayerStat = {
+  player_name: string;
+  position: string;
+  team_abbr: string;
+  passing_yards: number | null;
+  passing_tds: number | null;
+  passing_interceptions: number | null;
+  rushing_yards: number | null;
+  rushing_tds: number | null;
+  receptions: number | null;
+  receiving_yards: number | null;
+  receiving_tds: number | null;
+  fumbles_lost: number | null;
+  season: number;
+  week: number;
+  game_date: string;
+  home_team: string;
+  away_team: string;
+};
+
+function formatStat(label: string, value: number | null): string {
+  return `${label}: ${value === null ? "Not recorded" : value}`;
+}
+
+router.post("/chatbot", (req, res) => {
   const message =
     typeof req.body?.message === "string"
       ? req.body.message.trim()
@@ -31,128 +71,52 @@ router.post("/chatbot", async (req, res) => {
     });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  if (!apiKey) {
-    return res.status(503).json({
-      error: "Chatbot is not configured. The server API key is missing."
-    });
-  }
-
   try {
     const question = message.toLowerCase();
+
+    if (
+      /\b(bet|betting|gambling|wager|sportsbook|odds|player props)\b/i.test(question)
+    ) {
+      return res.json({
+        answer:
+          "I can help with factual NFL information, including real player statistics, teams, and historical game results. I don't provide gambling or betting recommendations.",
+        sources: ["SmartBet NFL information"]
+      });
+    }
 
     const teams = db.prepare(`
       SELECT team_abbr, team_name, team_conf, team_division
       FROM teams
-    `).all() as {
-      team_abbr: string;
-      team_name: string;
-      team_conf: string;
-      team_division: string;
-    }[];
+    `).all() as Team[];
 
     const matchedTeams = teams.filter((team) => {
-      const fullName = team.team_name.toLowerCase();
-      const abbreviation = team.team_abbr.toLowerCase();
-
       return (
-        question.includes(fullName) ||
-        new RegExp(`\\b${abbreviation}\\b`, "i").test(question)
+        question.includes(team.team_name.toLowerCase()) ||
+        new RegExp(`\\b${team.team_abbr}\\b`, "i").test(question)
       );
     });
 
-    const terms = [
-      ...new Set(
-        question.match(/[a-z0-9']{3,}/g) ?? []
-      )
-    ]
-      .filter((term) => !STOP_WORDS.has(term))
-      .slice(0, 8);
+    const players = db.prepare(`
+      SELECT player_id, player_name, position, team_abbr
+      FROM players
+    `).all() as Player[];
 
-    let matchedPlayers: {
-      player_id: string;
-      player_name: string;
-      position: string;
-      team_abbr: string;
-    }[] = [];
+    const matchedPlayers = players.filter((player) => {
+      return question.includes(player.player_name.toLowerCase());
+    });
 
-    if (terms.length > 0) {
-      const conditions = terms
-        .map(() => "LOWER(player_name) LIKE ?")
-        .join(" OR ");
-
-      matchedPlayers = db.prepare(`
-        SELECT player_id, player_name, position, team_abbr
-        FROM players
-        WHERE ${conditions}
-        ORDER BY player_name
-        LIMIT 12
-      `).all(
-        ...terms.map((term) => `%${term}%`)
-      ) as typeof matchedPlayers;
+    if (matchedPlayers.length > 1) {
+      return res.json({
+        answer:
+          "I found multiple matching players. Please include the player's full name so I can identify the correct record.",
+        sources: ["SmartBet SQLite database"]
+      });
     }
 
-    let games: Record<string, unknown>[] = [];
+    if (matchedPlayers.length === 1) {
+      const player = matchedPlayers[0];
 
-    if (matchedTeams.length > 0) {
-      const abbreviations = matchedTeams.map(
-        (team) => team.team_abbr
-      );
-
-      const placeholders = abbreviations.map(
-        () => "?"
-      ).join(", ");
-
-      games = db.prepare(`
-        SELECT *
-        FROM games
-        WHERE home_team IN (${placeholders})
-           OR away_team IN (${placeholders})
-        ORDER BY game_date DESC
-        LIMIT 15
-      `).all(
-        ...abbreviations,
-        ...abbreviations
-      ) as Record<string, unknown>[];
-    } else if (matchedPlayers.length > 0) {
-      const playerIds = matchedPlayers.map(
-        (player) => player.player_id
-      );
-
-      const placeholders = playerIds.map(
-        () => "?"
-      ).join(", ");
-
-      games = db.prepare(`
-        SELECT DISTINCT g.*
-        FROM games g
-        JOIN player_stats ps ON ps.game_id = g.game_id
-        WHERE ps.player_id IN (${placeholders})
-        ORDER BY g.game_date DESC
-        LIMIT 15
-      `).all(...playerIds) as Record<string, unknown>[];
-    } else {
-      games = db.prepare(`
-        SELECT *
-        FROM games
-        ORDER BY game_date DESC
-        LIMIT 10
-      `).all() as Record<string, unknown>[];
-    }
-
-    let playerStats: Record<string, unknown>[] = [];
-
-    if (matchedPlayers.length > 0) {
-      const playerIds = matchedPlayers.map(
-        (player) => player.player_id
-      );
-
-      const placeholders = playerIds.map(
-        () => "?"
-      ).join(", ");
-
-      playerStats = db.prepare(`
+      const stats = db.prepare(`
         SELECT
           p.player_name,
           p.position,
@@ -174,68 +138,123 @@ router.post("/chatbot", async (req, res) => {
         FROM player_stats ps
         JOIN players p ON p.player_id = ps.player_id
         JOIN games g ON g.game_id = ps.game_id
-        WHERE ps.player_id IN (${placeholders})
+        WHERE ps.player_id = ?
         ORDER BY g.game_date DESC
-        LIMIT 40
-      `).all(...playerIds) as Record<string, unknown>[];
+        LIMIT 10
+      `).all(player.player_id) as PlayerStat[];
+
+      if (
+        question.includes("position") ||
+        question.includes("who is") ||
+        question.includes("what team")
+      ) {
+        return res.json({
+          answer:
+            `${player.player_name} is a ${player.position} for ${player.team_abbr}.`,
+          sources: ["SmartBet SQLite database"]
+        });
+      }
+
+      if (stats.length === 0) {
+        return res.json({
+          answer:
+            `I found ${player.player_name} in the player database, but there are no recorded game statistics available for this player.`,
+          sources: ["SmartBet SQLite database"]
+        });
+      }
+
+      const latest = stats[0];
+
+      const answer = [
+        `${player.player_name} (${player.position}, ${player.team_abbr})`,
+        `Season ${latest.season}, Week ${latest.week}`,
+        `Game: ${latest.away_team} vs ${latest.home_team}`,
+        "",
+        formatStat("Passing yards", latest.passing_yards),
+        formatStat("Passing touchdowns", latest.passing_tds),
+        formatStat("Interceptions", latest.passing_interceptions),
+        formatStat("Rushing yards", latest.rushing_yards),
+        formatStat("Rushing touchdowns", latest.rushing_tds),
+        formatStat("Receptions", latest.receptions),
+        formatStat("Receiving yards", latest.receiving_yards),
+        formatStat("Receiving touchdowns", latest.receiving_tds),
+        formatStat("Fumbles lost", latest.fumbles_lost),
+        "",
+        `Game date: ${latest.game_date}`
+      ].join("\n");
+
+      return res.json({
+        answer,
+        sources: ["SmartBet SQLite database"]
+      });
     }
 
-    const context = {
-      source: "SmartBet SQLite database",
-      teams: matchedTeams,
-      players: matchedPlayers,
-      games,
-      playerStats
-    };
+    if (matchedTeams.length > 0) {
+      let games: Game[];
 
-    const openai = new OpenAI({
-      apiKey
-    });
+      if (matchedTeams.length >= 2) {
+        const first = matchedTeams[0].team_abbr;
+        const second = matchedTeams[1].team_abbr;
 
-    const response = await openai.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-6.2-astra",
-      instructions: `
-You are the SmartBet NFL information assistant.
+        games = db.prepare(`
+          SELECT *
+          FROM games
+          WHERE (
+            home_team = ? AND away_team = ?
+          ) OR (
+            home_team = ? AND away_team = ?
+          )
+          ORDER BY game_date DESC
+          LIMIT 10
+        `).all(first, second, second, first) as Game[];
+      } else {
+        const abbreviation = matchedTeams[0].team_abbr;
 
-Answer factual questions about NFL teams, games, players,
-historical results, and player statistics.
+        games = db.prepare(`
+          SELECT *
+          FROM games
+          WHERE home_team = ? OR away_team = ?
+          ORDER BY game_date DESC
+          LIMIT 10
+        `).all(abbreviation, abbreviation) as Game[];
+      }
 
-Use ONLY the database information supplied with the question.
-Do not invent statistics, scores, players, game results, or dates.
-If the supplied information does not answer the question,
-clearly explain that the information is unavailable.
+      const teamInfo = matchedTeams
+        .map((team) =>
+          `${team.team_name} (${team.team_abbr}) - ${team.team_conf}, ${team.team_division}`
+        )
+        .join("\n");
 
-Distinguish between a missing statistic and a statistic of zero.
-Do not treat missing values as zero.
-Do not claim that a player participated in a game unless the
-provided records support that conclusion.
+      const gameInfo = games.length
+        ? games.map((game) => {
+            if (
+              game.home_score === null ||
+              game.away_score === null
+            ) {
+              return `${game.away_team} vs ${game.home_team} - Score unavailable (${game.game_date})`;
+            }
 
-Never provide gambling, betting, wagering, sportsbook,
-odds, player prop, or betting prediction recommendations.
-Politely explain that you can help with factual NFL information instead.
+            return `${game.away_team} ${game.away_score} - ${game.home_team} ${game.home_score} (${game.game_date})`;
+          }).join("\n")
+        : "No game records were found.";
 
-Keep answers clear, conversational, and concise.
-      `,
-      input: `
-Question:
-${message}
-
-Database information:
-${JSON.stringify(context)}
-      `
-    });
+      return res.json({
+        answer: `${teamInfo}\n\nRecent recorded games:\n${gameInfo}`,
+        sources: ["SmartBet SQLite database"]
+      });
+    }
 
     return res.json({
-      answer: response.output_text,
-      sources: [
-        "SmartBet SQLite database"
-      ]
+      answer:
+        "I couldn't identify a specific player or team in your question. Try asking about a player's full name, a team's name, or a historical NFL game.",
+      sources: ["SmartBet NFL information"]
     });
+
   } catch (error) {
     console.error("Chatbot error:", error);
 
     return res.status(500).json({
-      error: "Unable to generate an answer right now."
+      error: "Unable to retrieve NFL information right now."
     });
   }
 });
