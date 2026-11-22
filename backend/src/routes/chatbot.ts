@@ -160,7 +160,7 @@ router.post("/chatbot", (req, res) => {
     ) {
       return res.json({
         answer:
-          "I can help with factual NFL information, including player statistics, teams, games, and historical results. I don't provide gambling or betting recommendations.",
+          "I can help with factual NFL information, including player statistics, teams, games, and historical results. ",
         sources: ["SmartBet NFL information"]
       });
     }
