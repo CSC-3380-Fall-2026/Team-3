@@ -3,7 +3,7 @@ import db from "../database";
 
 const router = Router();
 router.get("/historical-situations", (req, res) => {
-    const {playerId, stat, quarter, currentValue, line} = req.query;
+    const {playerId, stat, quarter, currentValue} = req.query;
 
     if (
         typeof playerId !== "string" ||
@@ -17,7 +17,7 @@ router.get("/historical-situations", (req, res) => {
     }
     const quarterNumber = Number(quarter);
     const currentStatValue = Number(currentValue);
-    const lineNumber = line === undefined ? null:Number(line);
+
     if (!Number.isInteger(quarterNumber) || quarterNumber < 1 || quarterNumber > 4) {
         return res.status(400).json({
             error: "Quarter has to be 1-4"
@@ -28,13 +28,6 @@ router.get("/historical-situations", (req, res) => {
             error: "currentValue must be a number"
         });
     }
-    if (line !== undefined &&(
-        typeof line !== "string" ||
-        line.trim() === ""||
-        !Number.isFinite(lineNumber)
-    )){return res.status(400).json(
-        {error: "line has to be a number"
-    });}
 
     const allowedStats = [
         "passing_yards",
@@ -75,7 +68,6 @@ router.get("/historical-situations", (req, res) => {
                               AND ps.player_id = ?
             WHERE p.${playerColumn} = ?
               AND p.qtr <= ?
-              AND ps.${stat} IS NOT NULL
             GROUP BY p.game_id,
                      g.season,
                      g.week,
@@ -104,30 +96,7 @@ router.get("/historical-situations", (req, res) => {
                 (sum, match) => sum + Number(match.final_value ?? 0),
                 0
             ) / sampleSize;
-
-            const overCount = lineNumber === null
-            ? null
-            :typedMatches.filter(match => match.final_value !== null && match.final_value>lineNumber).length;
-            const underCount = lineNumber === null
-            ? null
-            :typedMatches.filter(match => match.final_value !== null && match.final_value<lineNumber).length;
-            const pushCount = lineNumber === null
-            ? null
-            :typedMatches.filter(match => match.final_value !== null && match.final_value===lineNumber).length;
-        
-        const overPercentage =  overCount === null || sampleSize === 0
-        ? null
-        :(overCount/sampleSize)*100;
-        
-        const underPercentage =  underCount === null || sampleSize === 0
-        ? null
-        :(underCount/sampleSize)*100;
-
-        const pushPercentage =  pushCount === null || sampleSize === 0
-        ? null
-        :(pushCount/sampleSize)*100;
-
-            return res.status(200).json({
+        return res.status(200).json({
             playerId,
             stat,
             quarter: quarterNumber,
@@ -135,13 +104,6 @@ router.get("/historical-situations", (req, res) => {
             tolerance,
             sampleSize,
             averageFinalValue,
-            overCount,
-            underCount,
-            pushCount,
-            overPercentage,
-            underPercentage,
-            pushPercentage,
-            line: lineNumber,
             matches
         });
     } catch (error) {

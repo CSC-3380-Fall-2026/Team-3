@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import "./App.css";
 
@@ -8,9 +9,8 @@ import GamePage from "./pages/gamepage";
 import type { Game } from "./components/SearchPage";
 import PredictionPageTest from "./pages/predictionpagetest";
 import StartSit from "./startsit";
-import ChatbotPage from "./pages/chatbotpage";
 
-type Page = "search" | "startsit" | "predictions" | "team" | "game" | "chatbot";
+type Page = "search" | "startsit" | "predictions" | "team" | "game";
 
 const navigation: { id: Page; label: string }[] = [
   { id: "search", label: "NFL Data" },
@@ -18,7 +18,6 @@ const navigation: { id: Page; label: string }[] = [
   { id: "predictions", label: "Predictions" },
   { id: "team", label: "Teams" },
   { id: "game", label: "Games" },
-  { id: "chatbot", label: "SmartBet NFL Chatbot" },
 ];
 
 function App() {
@@ -86,13 +85,7 @@ function App() {
         ) : (
           <>
             {currentPage === "search" && (
-              <SearchPage
-                onSelectPlayer={setSelectedPlayer}
-                onSelectGame={(game) => {
-                  setSelectedGame(game);
-                  setCurrentPage("game");
-                }}
-              />
+              <SearchPage onSelectPlayer={setSelectedPlayer} onSelectGame={ (game) => {setSelectedGame(game); setCurrentPage("game");}}  />
             )}
 
             {currentPage === "startsit" && <StartSit />}
@@ -101,11 +94,11 @@ function App() {
 
             {currentPage === "team" && <TeamPage />}
 
-            {currentPage === "game" && selectedGame !== null && (
-              <GamePage game={selectedGame} />
+            {currentPage === "game" &&  selectedGame !== null && (
+              <GamePage
+                game={selectedGame}
+              />
             )}
-
-            {currentPage === "chatbot" && <ChatbotPage />}
           </>
         )}
       </main>

@@ -2,32 +2,23 @@ import db from "./database";
 import {createReadStream} from "fs";
 import {parse} from "csv-parse";
 import {resolve} from 'node:path';
-const seasons = [2020,2021,2022,2023,2024,2025,2026]
-const playerStatsFilePath = (season: number) => resolve(__dirname, `../../data/stats_player_week_${season}.csv`);
-const playByPlayFilePath = (season: number) => resolve(__dirname, `../../data/play_by_play_${season}.csv`);
 
-function toNull(value:string|undefined){
-    if (value === undefined || value?.trim() === "" || value.trim().toUpperCase() === "NA"){
-        return null;
-    }
-    const number = Number(value);
-    if(!Number.isFinite(number)) return null;
-    return number;
-}
+const playerStatsPath = resolve(__dirname, "../../data/stats_player_week_2026.csv");
+const playByPlayPath = resolve(__dirname, "../../data/play_by_play_2026.csv");
 
-const parser = (season:number) => createReadStream(playerStatsFilePath(season))
+const parser = createReadStream(playerStatsPath)
     .pipe(parse({
         columns: true,
         skip_empty_lines: true
     }));
 
-const parserGame = (season:number) => createReadStream(playByPlayFilePath(season))
+const parserGame = createReadStream(playByPlayPath)
     .pipe(parse({
         columns: true,
         skip_empty_lines: true
     }));
 
-const parserPlays = (season:number) => createReadStream(playByPlayFilePath(season))
+const parserPlays = createReadStream(playByPlayPath)
     .pipe(parse({
         columns: true,
         skip_empty_lines: true
@@ -77,8 +68,8 @@ const insertPlay = db.prepare(`
 const seenGames = new Set<string>();
 const seenPlayers = new Set<string>();
 
-async function importGamesFromPbp(season:number) {
-    for await (const row of parserGame(season)) {
+async function importGamesFromPbp() {
+    for await (const row of parserGame) {
         const gameID = row.game_id;
 
         if (seenGames.has(gameID)) {
@@ -91,8 +82,8 @@ async function importGamesFromPbp(season:number) {
             Number(row.week),
             row.season_type,
             row.game_date,
-            toNull(row.home_team),
-            toNull(row.away_team),
+            row.home_team,
+            row.away_team,
             Number(row.home_score),
             Number(row.away_score),
             "final"
@@ -102,58 +93,60 @@ async function importGamesFromPbp(season:number) {
     console.log(`Imported ${seenGames.size} games`);
 }
 
-async function importPlayersFromWeekly(season:number) {
-    for await (const row of parser(season)) {
+async function importPlayersFromWeekly() {
+    for await (const row of parser) {
         const playerID = row.player_id;
 
         if (!seenPlayers.has(playerID)) {
             seenPlayers.add(playerID);
-        }
-        insertPlayer.run(
+
+            insertPlayer.run(
                 playerID,
                 row.player_display_name,
                 row.position,
                 row.team
             );
+
+        }
         insertPlayerStats.run(
             playerID,
             row.game_id,
             row.team,
-            toNull(row.passing_yards),
-            toNull(row.passing_tds),
-            toNull(row.passing_interceptions),
-            toNull(row.rushing_yards),
-            toNull(row.rushing_tds),
-            toNull(row.receptions),
-            toNull(row.receiving_yards),
-            toNull(row.receiving_tds),
-            toNull(row.fumbles_lost_total)
+            Number(row.passing_yards),
+            Number(row.passing_tds),
+            Number(row.passing_interceptions),
+            Number(row.rushing_yards),
+            Number(row.rushing_tds),
+            Number(row.receptions),
+            Number(row.receiving_yards),
+            Number(row.receiving_tds),
+            Number(row.fumbles_lost_total)
         );
     }
     console.log(`Imported ${seenPlayers.size} players`);
 }
 
-async function importPlaysFromPbp(season:number) {
+async function importPlaysFromPbp() {
     let playCount = 0;
 
-    for await(const row of parserPlays(season)) {
+    for await(const row of parserPlays) {
         insertPlay.run(
             row.game_id,
             Number(row.play_id),
-            toNull(row.qtr),
-            toNull(row.game_seconds_remaining),
-            toNull(row.down),
-            toNull(row.yardstogo),
-            toNull(row.yardline_100),
+            Number(row.qtr),
+            Number(row.game_seconds_remaining),
+            Number(row.down),
+            Number(row.yardstogo),
+            Number(row.yardline_100),
             row.posteam,
-            toNull(row.score_differential),
+            Number(row.score_differential),
             row.passer_player_id,
             row.receiver_player_id,
             row.rusher_player_id,
-            toNull(row.passing_yards),
-            toNull(row.receiving_yards),
-            toNull(row.rushing_yards),
-            toNull(row.complete_pass)
+            Number(row.passing_yards),
+            Number(row.receiving_yards),
+            Number(row.rushing_yards),
+            Number(row.complete_pass)
         );
         playCount++;
     }
@@ -188,11 +181,9 @@ const insertPlayerStats = db.prepare(`
 `)
 
 async function main() {
-    for (const season of seasons){
-    await importGamesFromPbp(season);
-    await importPlayersFromWeekly(season);
-    await importPlaysFromPbp(season);
-    }
+    await importGamesFromPbp();
+    await importPlayersFromWeekly();
+    await importPlaysFromPbp();
 }
 
 main();
