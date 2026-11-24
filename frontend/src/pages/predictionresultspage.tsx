@@ -154,14 +154,14 @@ function PredictionResultsPage() {
       {historicalResults&&(
         <section>
           <h2>Comparable Historical Scenarios</h2>
-          <p>Games:{historicalResults.sampleSize}</p>
-          <p>Average Final Yards:{historicalResults.averageFinalValue??"No data"}</p>
+          <p>Games: {historicalResults.sampleSize}</p>
+          <p>Average Final Yards: {historicalResults.averageFinalValue?.toFixed(1)??"No data"}</p>
           <p>Games Over: {historicalResults.overCount ?? "No data"}</p>
           <p>Games Under: {historicalResults.underCount ?? "No data"}</p>
           <p>Pushes: {historicalResults.pushCount ?? "No data"}</p>
-          <p>Over Percentage: {historicalResults.overPercentage ?? "No data"}</p>
-          <p>Under Percentage: {historicalResults.underPercentage ?? "No data"}</p>
-          <p>Push Percentage: {historicalResults.pushPercentage ?? "No data"}</p>
+          <p>Over %: {historicalResults.overPercentage?.toFixed(1) ?? "No data"}</p>
+          <p>Under %: {historicalResults.underPercentage?.toFixed(1) ?? "No data"}</p>
+          <p>Push %: {historicalResults.pushPercentage?.toFixed(1) ?? "No data"}</p>
           <h3>Game Matches:</h3>
           {historicalResults.matches.map((game) => (
         <p key={game.game_id}>
