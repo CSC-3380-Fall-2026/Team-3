@@ -104,6 +104,9 @@ function App() {
             {currentPage === "game" && selectedGame !== null && (
               <GamePage game={selectedGame} />
             )}
+            {currentPage === "game" && selectedGame === null && (
+              <p>No game selected</p>
+            )}
 
             {currentPage === "chatbot" && <ChatbotPage />}
           </>
