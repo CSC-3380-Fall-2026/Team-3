@@ -25,6 +25,9 @@ type PlayerStats = {
   season: number;
   week: number;
   game_date: string | null;
+  home_team:string;
+  away_team:string;
+  game_type:string;
 };
 
 type PlayerProfileResponse = {
@@ -107,6 +110,7 @@ function PlayerPage({ playerName }: PlayerPageProps) {
     return <p>Player not found.</p>;
   }
 
+  const playoffs = ["Wild Card", "Divisional", "Conference Championship", "Super Bowl"];
   const total = (field: keyof PlayerStats) =>
     stats.reduce((sum, game) => sum + Number(game[field] || 0), 0);
 
@@ -127,7 +131,7 @@ function PlayerPage({ playerName }: PlayerPageProps) {
       </header>
 
       <section className="profile-section">
-        <h2>Stored Statistics</h2>
+        <h2>Player Stats Since 2020</h2>
         {stats.length === 0 ? (
           <p>No stored game statistics are available for this player.</p>
         ) : (
@@ -171,6 +175,7 @@ function PlayerPage({ playerName }: PlayerPageProps) {
                 <tr>
                   <th>Season</th>
                   <th>Week</th>
+                  <th>Opponent</th>
                   <th>Passing Yards</th>
                   <th>Passing TDs</th>
                   <th>Rushing Yards</th>
@@ -181,7 +186,15 @@ function PlayerPage({ playerName }: PlayerPageProps) {
                 {stats.map((game) => (
                   <tr key={`${game.game_id}-${game.player_id}`}>
                     <td>{game.season}</td>
-                    <td>{game.week}</td>
+                    <td>{game.game_type === "REG" ?
+                      game.week : playoffs[game.season === 2020 ? game.week - 18 : game.week -19]
+                      }
+                    </td>
+                    <td>
+                      {game.home_team === game.team_abbr ? "vs. " +game.away_team
+                      : "@" +game.home_team
+                      }
+                    </td>
                     <td>{game.passing_yards ?? 0}</td>
                     <td>{game.passing_tds ?? 0}</td>
                     <td>{game.rushing_yards ?? 0}</td>

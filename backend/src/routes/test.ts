@@ -55,7 +55,7 @@ router.get("/teams/:teamAbbr/games", (req, res) => {
       AND home_score IS NOT NULL
       AND away_score IS NOT NULL
     ORDER BY game_date DESC
-    LIMIT 3
+    LIMIT 10
   `).all(teamAbbr, teamAbbr);
 
   res.json(games);
@@ -102,7 +102,10 @@ router.get("/players/:playerId/stats", (req, res) => {
             ps.*,
             g.season,
             g.week,
-            g.game_date
+            g.game_date,
+            g.home_team,
+            g.away_team,
+            g.game_type
         FROM player_stats ps
         JOIN games g ON ps.game_id = g.game_id
         WHERE ps.player_id = ?
