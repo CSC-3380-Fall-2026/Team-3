@@ -90,9 +90,6 @@ if (!team) {
     return (
     <main className="profile-page">
       <header className="profile-header">
-        <div className="profile-avatar team-avatar">
-          {team.team_abbr}
-        </div>
         <div>
           <p className="profile-label">TEAM PROFILE</p>
           <h1>{team.team_name}</h1>
@@ -103,38 +100,8 @@ if (!team) {
         </div>
       </header>
 
-      <section className="profile-section">
-        <h2>Team Overview</h2>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <p>Team</p>
-            <h3>{team.team_name}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Abbreviation</p>
-            <h3>{team.team_abbr}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Conference</p>
-            <h3>{team.team_conf || "N/A"}</h3>
-          </div>
-          <div className="stat-card">
-            <p>Division</p>
-            <h3>{team.team_division || "N/A"}</h3>
-          </div>
-        </div>
-      </section>
-
-      <section className="profile-section">
-  <h2>Featured Player</h2>
-  <p className="placeholder-text">
-    Featured player information is not available yet.
-  </p>
-</section>
-
-
 <section className="profile-section">
-  <h2>Recent Games</h2>
+  <h2>Last 10 Games</h2>
 
   {gamesLoading ? (
     <p>Loading recent games...</p>
@@ -143,8 +110,21 @@ if (!team) {
   ) : games.length === 0 ? (
     <p className="placeholder-text">No recent games available.</p>
   ) : (
-    <div className="stats-grid">
-      {games.map((game) => {
+    <div className="profile-table-wrapper">
+      <table className="profile-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Result</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+      
+      {games.slice().sort((a,b)=> b.game_date.localeCompare(a.game_date)).slice(0,10).map((game) => {
         const isHome = game.home_team === team.team_abbr;
         const opponent = isHome ? game.away_team : game.home_team;
         const teamScore = isHome ? game.home_score : game.away_score;
@@ -158,26 +138,22 @@ if (!team) {
               : "Tie";
 
         return (
-          <div className="stat-card" key={game.game_id}>
-            <p>vs. {opponent}</p>
-            <h3>{result}</h3>
-            <p>{teamScore} - {opponentScore}</p>
-            <p>{game.game_date.slice(0, 10)}</p>
-          </div>
+          <tr key={game.game_id}>
+            <td>{game.game_date.slice(0, 10)}</td>
+            <td>{isHome ? "vs." : "@"} {opponent}</td>
+            <td>{result}</td>
+            <td>{teamScore} - {opponentScore}</td>
+
+          </tr>
         );
       })}
+      </tbody>
+      </table>
     </div>
+    
   )}
 </section>
 
-
-<section className="profile-section">
-  <h2>Team Analytics</h2>
-  <p className="placeholder-text">
-    Future feature: display team statistics, upcoming matchups,
-    sportsbook odds, and historical betting trends.
-  </p>
-</section>
     </main>
   );
 }

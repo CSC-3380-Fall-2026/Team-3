@@ -18,13 +18,14 @@ const navigation: { id: Page; label: string }[] = [
   { id: "predictions", label: "Predictions" },
   { id: "team", label: "Teams" },
   { id: "game", label: "Games" },
-  { id: "chatbot", label: "SmartBet NFL Chatbot" },
+  { id: "chatbot", label: "Chatbot" },
 ];
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("search");
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<string |null>(null);
 
   const navigate = (page: Page) => {
     setCurrentPage(page);
@@ -92,6 +93,10 @@ function App() {
                   setSelectedGame(game);
                   setCurrentPage("game");
                 }}
+                onSelectTeam={(team_abbr) => {
+                  setSelectedTeam(team_abbr);
+                  setCurrentPage("team");
+                }}
               />
             )}
 
@@ -99,7 +104,7 @@ function App() {
 
             {currentPage === "predictions" && <PredictionPageTest />}
 
-            {currentPage === "team" && <TeamPage />}
+            {currentPage === "team" && <TeamPage teamAbbr={selectedTeam ?? undefined} />}
 
             {currentPage === "game" && selectedGame !== null && (
               <GamePage game={selectedGame} />
